@@ -8,6 +8,10 @@ The public deployment is a **read-only live observer**. It automatically refresh
 
 [Open in GitHub Codespaces](https://codespaces.new/ajthebest3/decklab) · [Feature guide](docs/FEATURES.md) · [Architecture](docs/ARCHITECTURE.md) · [Development](docs/DEVELOPMENT.md) · [CLI assistants](docs/CLI_ASSISTANTS.md) · [Roadmap](docs/ROADMAP.md)
 
+## Architecture at a glance
+
+![DeckLab public observation architecture](docs/images/architecture.svg)
+
 ## What you can do
 
 - **Explore markets:** search tracked crypto, equity, index, FX and commodity observations. Source availability varies by provider.
