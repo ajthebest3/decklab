@@ -35,8 +35,10 @@ def crypto():
             name=a.get('wsname','')
             if not name.endswith('/USD') or a.get('status')!='online' or '.d' in pair:continue
             symbol=name.replace('XBT','BTC').replace('XDG','DOGE')
-            c.execute('INSERT INTO assets VALUES(?,?,?,?,?,?,?,1) ON CONFLICT(symbol) DO UPDATE SET pair=excluded.pair',
-                      (symbol,symbol,'crypto','Global','USD','Kraken',pair))
+            base=symbol.split('/')[0]
+            kind='forex' if base in core.markets.FIAT else 'commodity_token' if base in ('PAXG','XAUT') else 'crypto'
+            c.execute('INSERT INTO assets VALUES(?,?,?,?,?,?,?,1) ON CONFLICT(symbol) DO UPDATE SET pair=excluded.pair,kind=excluded.kind',
+                      (symbol,symbol,kind,'Global','USD','Kraken',pair))
     payload=core.getjson('https://api.kraken.com/0/public/Ticker')
     if payload.get('error'):raise ValueError('Kraken spot ticker unavailable')
     now=time.time();count=0
