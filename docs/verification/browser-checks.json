@@ -1,0 +1,74 @@
+{
+  "checks": [
+    {
+      "name": "Edits during refresh survive",
+      "pass": true
+    },
+    {
+      "name": "Chat model draft survives",
+      "pass": true
+    },
+    {
+      "name": "Enable checkbox draft survives",
+      "pass": true
+    },
+    {
+      "name": "Per-bot assignment survives",
+      "pass": true
+    },
+    {
+      "name": "Details state survives",
+      "pass": true
+    },
+    {
+      "name": "Password node retained without reading",
+      "pass": true
+    },
+    {
+      "name": "Password remains in input only",
+      "pass": true
+    },
+    {
+      "name": "Expired evidence not labelled verified",
+      "pass": true
+    },
+    {
+      "name": "Provider alias is explicit",
+      "pass": true
+    },
+    {
+      "name": "Assignment changes reviewed before save",
+      "pass": true
+    },
+    {
+      "name": "Rejected review makes no mutation",
+      "pass": true
+    },
+    {
+      "name": "In-flight save blocks refresh and concurrent mutations",
+      "pass": true
+    },
+    {
+      "name": "Successful save clears password input",
+      "pass": true
+    },
+    {
+      "name": "Closed panel ignores pending refresh",
+      "pass": true
+    },
+    {
+      "name": "Changed native origin blocks save",
+      "pass": true
+    },
+    {
+      "name": "Changed native origin clears old secret DOM",
+      "pass": true
+    },
+    {
+      "name": "No JS errors",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "scope": "Chromium deterministic web/native-bridge fixture; no physical device or runtime provider requests"
+}

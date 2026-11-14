@@ -1,0 +1,102 @@
+[
+  {
+    "repo": "bmoscon/cryptofeed",
+    "url": "https://github.com/bmoscon/cryptofeed",
+    "description": "Cryptocurrency Exchange Websocket Data Feed Handler",
+    "license": "AGPL-3.0-or-later with attribution terms",
+    "default_branch": "master",
+    "updated": "2026-11-05T01:34:48Z",
+    "archived": false,
+    "integration": "Reviewed \u00b7 future streaming adapter; current source cadence stays explicit"
+  },
+  {
+    "repo": "ccxt/ccxt",
+    "url": "https://github.com/ccxt/ccxt",
+    "description": "A unified trading API with more than 100 crypto exchanges and prediction markets in JavaScript / TypeScript / Python / C# / PHP / Go / Java / Rust",
+    "license": "MIT",
+    "default_branch": "master",
+    "updated": "2026-11-05T07:44:17Z",
+    "archived": false,
+    "integration": "Reviewed \u00b7 future multi-exchange adapters; current execution uses existing public books"
+  },
+  {
+    "repo": "freqtrade/freqtrade",
+    "url": "https://github.com/freqtrade/freqtrade",
+    "description": "Free, open source crypto trading bot",
+    "license": "GPL-3.0",
+    "default_branch": "develop",
+    "updated": "2026-11-05T05:06:42Z",
+    "archived": false,
+    "integration": "Reviewed \u00b7 standalone strategy/backtest engine; no second executor installed"
+  },
+  {
+    "repo": "polakowo/vectorbt",
+    "url": "https://github.com/polakowo/vectorbt",
+    "description": "The research engine that gives you an unfair advantage. Run thousands of trading ideas before others finish one.",
+    "license": "Apache-2.0 plus Commons Clause; see upstream license",
+    "default_branch": "master",
+    "updated": "2026-11-03T21:02:32Z",
+    "archived": false,
+    "integration": "Reviewed \u00b7 future isolated chronological research; current outcomes remain actual ledger results"
+  },
+  {
+    "repo": "TA-Lib/ta-lib-python",
+    "url": "https://github.com/TA-Lib/ta-lib-python",
+    "description": "Python wrapper for TA-Lib (http://ta-lib.org/).",
+    "license": "BSD-2-Clause",
+    "default_branch": "master",
+    "updated": "2026-11-04T17:07:30Z",
+    "archived": false,
+    "integration": "Reviewed \u00b7 optional indicators; no uncomputed indicator scores displayed"
+  },
+  {
+    "repo": "skfolio/skfolio",
+    "url": "https://github.com/skfolio/skfolio",
+    "description": "Python library for portfolio optimization, factor model construction, and risk management built on scikit-learn",
+    "license": "BSD-3-Clause",
+    "default_branch": "main",
+    "updated": "2026-10-29T18:45:08Z",
+    "archived": false,
+    "integration": "Reviewed \u00b7 future constrained optimization; owner allocation controls stay in force"
+  },
+  {
+    "repo": "ranaroussi/quantstats",
+    "url": "https://github.com/ranaroussi/quantstats",
+    "description": "Portfolio analytics for quants, written in Python",
+    "license": "Apache-2.0",
+    "default_branch": "main",
+    "updated": "2026-11-02T14:00:34Z",
+    "archived": false,
+    "integration": "Reviewed \u00b7 reporting concepts; current closed metrics calculated directly from ledger, package not installed"
+  },
+  {
+    "repo": "duckdb/duckdb",
+    "url": "https://github.com/duckdb/duckdb",
+    "description": "DuckDB is a high-performance analytical database system",
+    "license": "MIT",
+    "default_branch": "main",
+    "updated": "2026-11-05T08:41:38Z",
+    "archived": false,
+    "integration": "Reviewed \u00b7 future archive analytics; SQLite ledger retained"
+  },
+  {
+    "repo": "agronholm/apscheduler",
+    "url": "https://github.com/agronholm/apscheduler",
+    "description": "Task scheduling library for Python",
+    "license": "MIT",
+    "default_branch": "master",
+    "updated": "2026-10-26T19:55:38Z",
+    "archived": false,
+    "integration": "Reviewed \u00b7 scheduling concepts; existing bounded worker retained"
+  },
+  {
+    "repo": "tradingview/lightweight-charts",
+    "url": "https://github.com/tradingview/lightweight-charts",
+    "description": "Performant financial charts built with HTML5 canvas",
+    "license": "Apache-2.0",
+    "default_branch": "master",
+    "updated": "2026-11-04T11:36:41Z",
+    "archived": false,
+    "integration": "Integrated \u00b7 pinned 5.0.9 chart bundle, candlesticks/area, crosshair, touch pan/zoom and recorded-fill markers"
+  }
+]

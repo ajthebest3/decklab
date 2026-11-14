@@ -1,0 +1,42 @@
+# Private runtime state, credentials and backups never belong in Git.
+/data/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*credentials*.json
+*signing*.json
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+*.token
+*.log
+
+# Generated caches/builds. Preserve the Gradle wrapper and original sources.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+node_modules/
+/android/.gradle/
+/android/**/build/
+/android/local.properties
+/android/dist/*.apk
+/android/dist/*.apk.*
+/training/exports/
+/training/output/
+
+# Legacy live reports remain on the server; keep reproducible test scripts.
+/test-results/*
+!/test-results/*.py
+# Historical isolated browser summary is already in the original commit.
+!/test-results/browser.json

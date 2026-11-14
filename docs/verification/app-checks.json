@@ -1,0 +1,60 @@
+{
+  "checks": [
+    {
+      "name": "Server reachability copy is scoped",
+      "pass": true
+    },
+    {
+      "name": "Owner pause has separate visible status",
+      "pass": true
+    },
+    {
+      "name": "Original-account control labelled correctly",
+      "pass": true
+    },
+    {
+      "name": "New Era scene retained",
+      "pass": true
+    },
+    {
+      "name": "All desktop routes retained",
+      "pass": true
+    },
+    {
+      "name": "UI receipt is distinct from source time",
+      "pass": true
+    },
+    {
+      "name": "Stop review retains holdings and independent scopes",
+      "pass": true
+    },
+    {
+      "name": "No page overflow 320",
+      "pass": true
+    },
+    {
+      "name": "No page overflow 390",
+      "pass": true
+    },
+    {
+      "name": "No page overflow 1440",
+      "pass": true
+    },
+    {
+      "name": "No financial mutation submitted",
+      "pass": true
+    },
+    {
+      "name": "No external provider request",
+      "pass": true
+    },
+    {
+      "name": "No JavaScript errors",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "external": [],
+  "mutations": [],
+  "scope": "Actual app / isolated temporary server, no workers, no APK/handset claim"
+}

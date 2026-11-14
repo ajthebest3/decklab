@@ -1,0 +1,10 @@
+{
+  "base_tasks": 102,
+  "spatial_tasks": 15,
+  "total": 117,
+  "missing_dependencies": {},
+  "acyclic": true,
+  "frozen_base_unchanged": true,
+  "spatial_source_sha256": "d9ef99028c1efd766e8ec8e68d97289051f321f8af25407b6d6180597996048d",
+  "visual_corrections": "S03/S04 follow latest black New Era/WebGL owner choice, not historical Paper/CSS-only constraints"
+}

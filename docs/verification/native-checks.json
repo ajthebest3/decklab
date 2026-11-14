@@ -1,0 +1,18 @@
+{
+  "suites": [
+    {
+      "suite": "com.marketdeck.app.NativeAppTest",
+      "tests": 28,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "suite": "com.marketdeck.app.ResourceHealthTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0
+    }
+  ],
+  "total_tests": 32,
+  "scope": "JVM/Robolectric only; delivered APK unchanged; no handset certification"
+}

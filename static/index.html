@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b0e11" />
+    <meta
+      name="description"
+      content="Arpit's global market research, news and paper trading workspace"
+    />
+    <title>DeckLab · A new era of intelligence</title>
+    <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/demo.css"><link rel="stylesheet" href="/terminal.css"></head>
+  <body>
+    <a class="skip-link" href="#view">Skip to workspace</a>
+    <div id="nav-backdrop"></div>
+    <aside class="sidebar" aria-label="Workspace navigation">
+      <a class="brand" href="#overview"
+        ><span class="brandmark">D<span>↗</span></span>
+        <div>decklab<small>PERSONAL MARKET TERMINAL</small></div></a
+      >
+      <div class="workspace-label">
+        <span class="avatar">A</span>
+        <div>Arpit's workspace<small>Personal account</small></div>
+        <span class="workspace-chevron">⌄</span>
+      </div>
+      <div class="space-label">WORKSPACE <span>01</span></div>
+      <nav id="navigation"></nav>
+      <div class="side-bottom">
+        <div class="side-note">
+          <span class="status-dot"></span> Built for the bigger picture
+          <p>Global markets.<br />A clearer perspective.</p>
+        </div>
+        <div class="connection">
+          <i></i
+          ><span>Local engine<small id="engine-label">Connecting…</small></span>
+        </div>
+        <button id="stop" class="stop">◼ Stop original account</button>
+        <div class="owner">
+          <span class="avatar">A</span>
+          <div>Arpit<small>Paper trading workspace</small></div>
+          <span class="tag">LOCAL</span>
+        </div>
+      </div>
+    </aside>
+    <main>
+      <header>
+        <button
+          id="menu-toggle"
+          class="icon-button"
+          aria-label="Open navigation"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+        <div class="breadcrumb">
+          Workspace <span>/</span> <strong id="page-name">Overview</strong>
+        </div>
+        <button id="open-search" class="global-search">
+          <span>⌕</span><span>Search markets, pages…</span><kbd>Ctrl K</kbd>
+        </button>
+        <div class="header-right">
+          <span class="pill green" id="live-badge">● CONNECTING</span
+          ><span class="pill paper">PAPER MODE</span><time id="clock"></time
+          ><button
+            id="refresh"
+            class="icon-button"
+            title="Refresh dashboard"
+            aria-label="Refresh dashboard"
+          >
+            ↻
+          </button>
+        </div>
+      </header>
+      <div id="ticker" class="ticker" aria-label="Market ticker"></div>
+      <div class="page">
+<section class="era-hero" aria-label="DeckLab New Era">
+ <div class="era-atmosphere" aria-hidden="true"></div>
+ <div class="era-scene" id="scene-wrap"><div class="era-fallback" aria-hidden="true"></div><canvas id="sculpture" role="img" aria-label="Decorative orange and blue particle halo. Use arrow keys to rotate; not market data." tabindex="0"></canvas></div>
+ <div class="era-topline"><span>DECKLAB <i>/</i> NEW ERA</span><span class="era-scene-label">01 — THE SIGNAL</span></div>
+ <div class="era-copy"><div class="era-badge"><span class="era-badge-mark">✧</span> A new perspective on intelligence</div><h2>A universe of signals.<br><span>A clearer perspective.</span></h2><p>Where markets, models and evidence converge.<br>Your private space to see the bigger picture.</p><div class="era-actions"><a class="era-primary" href="#markets" id="explore-markets">Explore the markets <span>↗</span></a><a class="era-secondary" href="#journal" id="era-evidence">Follow the evidence <span>→</span></a></div><div class="era-caption">MARKETS &nbsp; / &nbsp; MODELS &nbsp; / &nbsp; EVIDENCE</div></div>
+ <div class="era-bottom"><span class="era-caption">A DIFFERENT DIMENSION OF CLARITY</span><div class="scene-tools era-tools" role="group" aria-label="Particle scene controls"><button id="view-solid" data-era-shape="0" aria-pressed="true">Halo</button><button id="view-wire" data-era-shape="1" aria-pressed="false">Orbit</button><button id="view-explode" data-era-shape="2" aria-pressed="false">Galaxy</button><span></span><button id="motion" aria-pressed="false">Motion off</button><button id="reset-scene" aria-label="Reset particle scene">↺</button></div><span id="render-status" class="era-caption" role="status">PARTICLE STUDY / DECORATIVE</span></div>
+</section>
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow" id="heading-eyebrow">
+              YOUR DAILY PERSPECTIVE
+            </div>
+            <h1 id="heading">Market overview<span class="dot">.</span></h1>
+            <p id="subtitle">The bigger picture. The details that matter.</p>
+          </div>
+          <div class="heading-actions">
+            <span id="updated" class="muted"></span
+            ><button class="primary" id="open-ticket">
+              ＋ Paper trade <span>↗</span>
+            </button>
+          </div>
+        </div>
+        <div id="view" tabindex="-1"></div>
+        <footer>
+          <span
+            ><span class="tiny-dot"></span> MARKET DECK
+            <span class="muted">/</span> YOUR MARKET, IN FOCUS</span
+          ><span
+            >Indicative feeds · paper execution · times in your browser's
+            timezone</span
+          >
+        </footer>
+      </div>
+    </main>
+    <dialog id="trade-dialog" aria-labelledby="order-title">
+      <form id="order-form">
+        <div class="dialog-heading">
+          <div>
+            <div class="eyebrow">PAPER EXECUTION</div>
+            <h2 id="order-title">Plan your next move.</h2>
+          </div>
+          <button
+            type="button"
+            class="icon-button close-dialog"
+            aria-label="Close order"
+          >
+            ×
+          </button>
+        </div>
+        <label
+          >Instrument<select name="symbol" id="order-symbol" required></select
+        ></label>
+        <div id="order-quote" class="quote-preview"></div>
+        <div class="segmented sides">
+          <label
+            ><input type="radio" name="side" value="buy" checked /><span
+              >Buy / Long</span
+            ></label
+          ><label
+            ><input type="radio" name="side" value="sell" /><span
+              >Sell / Close</span
+            ></label
+          >
+        </div>
+        <label
+          >Quantity<input
+            type="number"
+            name="qty"
+            min="0.00000001"
+            step="any"
+            required
+            placeholder="0.00"
+        /></label>
+        <div class="size-presets">
+          <span>Order value</span
+          ><button type="button" data-budget="100">$100</button
+          ><button type="button" data-budget="500">$500</button
+          ><button type="button" data-budget="1000">$1,000</button
+          ><button type="button" id="close-position">All held</button>
+        </div>
+        <div id="order-estimate" class="muted" aria-live="polite">
+          Enter quantity to estimate the order.
+        </div>
+        <div id="order-preflight" aria-live="polite"></div>
+        <div class="notice">
+          Simulated market fill · 0.05% slippage · 0.1% fee. The server rechecks
+          price, funds and risk limits when you place the order.
+        </div>
+        <button class="primary wide" type="submit" disabled>
+          Place paper order
+        </button>
+      </form>
+    </dialog>
+    <dialog id="add-dialog" aria-labelledby="add-title">
+      <form id="add-form">
+        <div class="dialog-heading">
+          <h2 id="add-title">Explore an instrument</h2>
+          <button
+            type="button"
+            class="icon-button close-dialog"
+            aria-label="Close instrument search"
+          >
+            ×
+          </button>
+        </div>
+        <label
+          >Symbol or company name<input
+            id="catalog-query"
+            placeholder="BTC, Apple, RELIANCE.NS, 7203.T…"
+            autocomplete="off"
+        /></label>
+        <div id="catalog-results"></div>
+        <div class="notice">
+          Search the crypto catalog and tracked instruments. For another stock,
+          use its exact Yahoo Finance symbol with exchange suffix.
+        </div>
+        <button type="submit" class="primary wide">Track entered symbol</button>
+      </form>
+    </dialog>
+    <dialog id="search-dialog" aria-labelledby="search-title">
+      <div class="palette-heading">
+        <span id="search-title">⌕</span
+        ><input
+          id="global-query"
+          aria-label="Search markets and pages"
+          placeholder="Find an instrument or jump to a page…"
+          autocomplete="off"
+        /><button class="close-dialog" aria-label="Close search">Esc</button>
+      </div>
+      <div id="global-results"></div>
+      <div class="palette-footer">
+        <span>↑ ↓ navigate &nbsp; ↵ open</span><span>Markets & workspace</span>
+      </div>
+    </dialog>
+    <div id="toast" role="status"></div>
+    <script src="/app.js" defer></script>
+    <script src="/coverage.js" defer></script>
+    <script src="/vendor/lightweight-charts.js" defer></script><script src="/terminal.js" defer></script><script src="/demo.js" defer></script>
+    <script src="/ai-settings.js" defer></script>
+    <script src="/admin.js" defer></script>
+  <script type="module">import {initNewEra} from "/vendor/new-era.js"; initNewEra();</script>
+  </body>
+</html>

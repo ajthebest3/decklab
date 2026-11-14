@@ -1,0 +1,31 @@
+{
+  "name": "DeckLab \u2014 paused development",
+  "image": "mcr.microsoft.com/devcontainers/python:3.13-bookworm",
+  "remoteUser": "vscode",
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "postStartCommand": "bash .devcontainer/start-observer.sh",
+  "forwardPorts": [
+    8790
+  ],
+  "portsAttributes": {
+    "8790": {
+      "label": "DeckLab public observer",
+      "onAutoForward": "silent"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "files.exclude": {
+          "**/__pycache__": true
+        }
+      }
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+  }
+}

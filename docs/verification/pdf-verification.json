@@ -1,0 +1,13 @@
+{
+  "pages": 64,
+  "bytes": 969544,
+  "sha256": "3076d5e33353d2b6241d40b595738a2cf7ec4d89669ffb1849a9237ee687a921",
+  "all_102_task_ids_verified": true,
+  "external_requests": [],
+  "sources": {
+    "20261113-five-phase/PLAN.md": "8eee838325e101a9e6e2005cbf6f03b2eefcc5d681422a4d1ae6fbf41f038c9c",
+    "20261113-five-phase/TASK_REGISTER.csv": "53364462b276f107da8d07bea993b450020fdbfa22dc47c6a41fa5af8f44bb00",
+    "20261113-five-phase/3d-revision/TASKS_3D.md": "d9ef99028c1efd766e8ec8e68d97289051f321f8af25407b6d6180597996048d",
+    "20261114-new-era/REFERENCE_STUDY.md": "6843f3e98af310b99187f64c4f85c9305c8e299f92ece642e4ebe314e2892897"
+  }
+}

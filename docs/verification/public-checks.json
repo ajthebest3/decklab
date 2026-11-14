@@ -1,0 +1,67 @@
+{
+  "profile": "public observation + CLI-only compatibility boundary",
+  "suites": [
+    {
+      "suite": "test_foundation.py",
+      "passed": true,
+      "tests": 10,
+      "error_tail": ""
+    },
+    {
+      "suite": "test_foundation_http.py",
+      "passed": true,
+      "tests": 8,
+      "error_tail": ""
+    },
+    {
+      "suite": "test_foundation_operations.py",
+      "passed": true,
+      "tests": 10,
+      "error_tail": ""
+    },
+    {
+      "suite": "test_risk.py",
+      "passed": true,
+      "tests": 11,
+      "error_tail": ""
+    },
+    {
+      "suite": "test_http.py",
+      "passed": true,
+      "tests": 6,
+      "error_tail": ""
+    },
+    {
+      "suite": "test_research.py",
+      "passed": true,
+      "tests": 18,
+      "error_tail": ""
+    },
+    {
+      "suite": "test_chat.py",
+      "passed": true,
+      "tests": 11,
+      "error_tail": ""
+    },
+    {
+      "suite": "test_admin_http.py",
+      "passed": true,
+      "tests": 6,
+      "error_tail": ""
+    },
+    {
+      "suite": "test_observer.py",
+      "passed": true,
+      "tests": 8,
+      "error_tail": ""
+    },
+    {
+      "suite": "test_cli_advisor.py",
+      "passed": true,
+      "tests": 4,
+      "error_tail": ""
+    }
+  ],
+  "tests": 92,
+  "all_passed": true
+}

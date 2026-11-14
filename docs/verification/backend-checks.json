@@ -1,0 +1,66 @@
+{
+  "results": [
+    {
+      "suite": "test_foundation.py",
+      "tests": 10,
+      "passed": true,
+      "log": "test_foundation.log"
+    },
+    {
+      "suite": "test_foundation_http.py",
+      "tests": 8,
+      "passed": true,
+      "log": "test_foundation_http.log"
+    },
+    {
+      "suite": "test_foundation_operations.py",
+      "tests": 10,
+      "passed": true,
+      "log": "test_foundation_operations.log"
+    },
+    {
+      "suite": "test_mirai_foundation.py",
+      "tests": 12,
+      "passed": true,
+      "log": "test_mirai_foundation.log"
+    },
+    {
+      "suite": "test_mirai.py",
+      "tests": 15,
+      "passed": true,
+      "log": "test_mirai.log"
+    },
+    {
+      "suite": "test_risk.py",
+      "tests": 11,
+      "passed": true,
+      "log": "test_risk.log"
+    },
+    {
+      "suite": "test_http.py",
+      "tests": 6,
+      "passed": true,
+      "log": "test_http.log"
+    },
+    {
+      "suite": "test_research.py",
+      "tests": 18,
+      "passed": true,
+      "log": "test_research.log"
+    },
+    {
+      "suite": "test_chat.py",
+      "tests": 11,
+      "passed": true,
+      "log": "test_chat.log"
+    },
+    {
+      "suite": "test_admin_http.py",
+      "tests": 6,
+      "passed": true,
+      "log": "test_admin_http.log"
+    }
+  ],
+  "total_tests": 107,
+  "all_passed": true
+}

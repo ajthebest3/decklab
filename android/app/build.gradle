@@ -1,0 +1,27 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'com.marketdeck.app'
+    compileSdk 36
+    defaultConfig {
+        applicationId 'com.marketdeck.app'
+        minSdk 26
+        targetSdk 36
+        versionCode 20
+        versionName '2.2.0'
+    }
+    testOptions { unitTests.includeAndroidResources = true; unitTests.all { maxHeapSize = "768m"; systemProperty "robolectric.dependency.repo.url", "https://repo.maven.apache.org/maven2"; jvmArgs "--add-opens=java.base/java.lang=ALL-UNNAMED", "--add-opens=java.base/java.util=ALL-UNNAMED", "--add-opens=java.base/java.io=ALL-UNNAMED", "--add-opens=java.base/java.net=ALL-UNNAMED", "--add-opens=java.base/java.security=ALL-UNNAMED", "--add-opens=java.base/java.text=ALL-UNNAMED", "--add-opens=java.base/jdk.internal.access=ALL-UNNAMED" } }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+    signingConfigs {
+        privateRelease {
+            if (System.getenv('MARKET_DECK_KEYSTORE')) {
+                storeFile file(System.getenv('MARKET_DECK_KEYSTORE'))
+                storePassword System.getenv('MARKET_DECK_SIGNING_PASSWORD')
+                keyAlias 'market-deck'
+                keyPassword System.getenv('MARKET_DECK_SIGNING_PASSWORD')
+            }
+        }
+    }
+    buildTypes { release { minifyEnabled false; if (System.getenv('MARKET_DECK_KEYSTORE')) signingConfig signingConfigs.privateRelease } }
+}
+
+dependencies { testImplementation "junit:junit:4.13.2"; testImplementation "org.robolectric:robolectric:4.17" }

@@ -1,0 +1,11 @@
+{
+  "package": "lightweight-charts",
+  "version": "5.0.9",
+  "repository": "https://github.com/tradingview/lightweight-charts",
+  "files": {
+    "lightweight-charts.LICENSE.txt": "70c9d5382506dd184465425c08a99ad9bd6d9ac1313c252968ba0b585e5ef823",
+    "lightweight-charts.NOTICE.txt": "f76c6afab94884448f0426e30d6e9d555ca7247894cd3484e477d2f87513036e",
+    "lightweight-charts.js": "e6bd6516d9ab9cb897c0d6438e3fe1126f2fdce07e68c23836e84d527de81f52"
+  },
+  "verification": "npm tarball SHA512 integrity verified before extracting bundle and license; NOTICE from matching official v5.0.9 tag"
+}
