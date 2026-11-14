@@ -11,5 +11,5 @@ printf '%s\n' 'DeckLab source is ready. Research, simulation and HTTP workers we
 printf '%s\n' 'Read README.md and docs/DEVELOPMENT.md before running isolated tests.'
 
 if [[ "$(printenv CODESPACES)" == true ]]; then
-  nohup bash .devcontainer/install-clis.sh >data/cli-install.log 2>&1 </dev/null &
+  python .devcontainer/start-services.py --install-clis-only
 fi
