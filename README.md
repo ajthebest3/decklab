@@ -6,7 +6,27 @@ DeckLab is a visual market research workspace with a black New Era interface, an
 
 The public deployment is a **read-only live observer**. It automatically refreshes market/news observations while its GitHub Codespace is running. **AI is off. Order execution is off. No personal accounts or private ledgers are exposed.**
 
-[Open in GitHub Codespaces](https://codespaces.new/ajthebest3/decklab) · [Feature guide](docs/FEATURES.md) · [Architecture](docs/ARCHITECTURE.md) · [Development](docs/DEVELOPMENT.md) · [CLI assistants](docs/CLI_ASSISTANTS.md) · [Roadmap](docs/ROADMAP.md)
+[**Open the live website**](https://decklab-live-5xw6xv99qvvc7g9j-8790.app.github.dev) · [Open in GitHub Codespaces](https://codespaces.new/ajthebest3/decklab) · [Feature guide](docs/FEATURES.md) · [Architecture](docs/ARCHITECTURE.md) · [Development](docs/DEVELOPMENT.md) · [CLI assistants](docs/CLI_ASSISTANTS.md) · [Roadmap](docs/ROADMAP.md)
+
+## Screenshots
+
+Actual captures of the public deployment. Market values and publisher headlines are snapshots, not current recommendations. Mobile images use a browser viewport, not a physical handset.
+
+### Desktop / New Era
+
+![DeckLab live desktop with original 3D halo](docs/images/live-desktop.png)
+
+### Market radar and observed price history
+
+![DeckLab markets and observed chart](docs/images/live-markets.png)
+
+### Publisher research wire
+
+![DeckLab publisher headlines](docs/images/live-news.png)
+
+### Mobile
+
+<img src="docs/images/live-mobile.png" width="390" alt="DeckLab public observer at mobile viewport width">
 
 ## Architecture at a glance
 
@@ -77,3 +97,7 @@ This distribution uses **Codex, Claude and AGY CLIs** for optional manual develo
 - [Full specification and 117-task working graph](docs/roadmap/)
 
 Third-party libraries retain their own license and notice files. No blanket project license is granted here.
+
+## Verified deployment snapshot
+
+The live check recorded **677 instruments with observations**, **40 displayed publisher headlines** and **30 deterministic research entries**. Availability changes; see source health and timestamps on the live site. The public profile passed **92 isolated backend checks**, responsive browser checks and a successful GitHub Actions run. [Live verification](docs/verification/live-deployment.json) · [Public tests](docs/verification/public-checks.json).

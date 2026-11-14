@@ -1,0 +1,37 @@
+{
+  "captured_utc": "2026-11-14T19:24:44.838302+00:00",
+  "url": "https://decklab-live-5xw6xv99qvvc7g9j-8790.app.github.dev",
+  "health": {
+    "ok": true,
+    "mode": "live-observation",
+    "ai_enabled": false,
+    "execution_enabled": false
+  },
+  "observed_quotes": 677,
+  "news_displayed": 40,
+  "research_items": 30,
+  "checks": [
+    {
+      "check": "mobile layout no overflow",
+      "pass": true
+    },
+    {
+      "check": "AI and execution disabled",
+      "pass": true
+    },
+    {
+      "check": "real public observations present",
+      "pass": true
+    },
+    {
+      "check": "headlines present",
+      "pass": true
+    },
+    {
+      "check": "no JS errors",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "screenshots": "Actual public Codespace; mobile viewport emulation, not physical handset"
+}
