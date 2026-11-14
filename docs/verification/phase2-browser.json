@@ -1,0 +1,92 @@
+{
+  "scope": "Phase 2 public observer first slice; isolated synthetic test fixture, not market evidence",
+  "checks": [
+    {
+      "name": "Real saved samples exposed as table",
+      "pass": true
+    },
+    {
+      "name": "Read-only statuses visible",
+      "pass": true
+    },
+    {
+      "name": "Area chart uses saved samples",
+      "pass": true
+    },
+    {
+      "name": "Keyboard sample inspector",
+      "pass": true
+    },
+    {
+      "name": "Refresh preserves exact focused button",
+      "pass": true
+    },
+    {
+      "name": "Refresh reuses keyed row",
+      "pass": true
+    },
+    {
+      "name": "Refresh preserves chart type and evidence disclosure",
+      "pass": true
+    },
+    {
+      "name": "Late symbol response cannot repaint selected evidence",
+      "pass": true
+    },
+    {
+      "name": "Late search response rejected",
+      "pass": true
+    },
+    {
+      "name": "Watchlist survives keyed rendering",
+      "pass": true
+    },
+    {
+      "name": "Empty results explicit",
+      "pass": true
+    },
+    {
+      "name": "Failed refresh keeps observations and offers retry",
+      "pass": true
+    },
+    {
+      "name": "Keyboard help dialog opens",
+      "pass": true
+    },
+    {
+      "name": "Dialog closes with keyboard",
+      "pass": true
+    },
+    {
+      "name": "No page overflow 320",
+      "pass": true
+    },
+    {
+      "name": "No page overflow 390",
+      "pass": true
+    },
+    {
+      "name": "No page overflow 768",
+      "pass": true
+    },
+    {
+      "name": "No page overflow 1440",
+      "pass": true
+    },
+    {
+      "name": "200% computed text at 390 does not overflow page",
+      "pass": true
+    },
+    {
+      "name": "Reduced motion scene remains off",
+      "pass": true
+    },
+    {
+      "name": "No browser JavaScript errors",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "device": "Headless Chromium / Linux software WebGL; viewport emulation, not physical handset",
+  "limits": "No full screen-reader or manual contrast audit; no interaction latency budget claim."
+}

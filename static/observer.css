@@ -3,3 +3,16 @@
 .era-hero{overflow:hidden}.observer-nav nav{min-width:0;max-width:100%;flex-wrap:wrap}.observer-nav nav a{padding:0;min-width:0;display:inline-flex;width:auto;flex:none}@media(max-width:520px){.observer-nav nav{gap:12px;justify-content:space-between;font-size:11px}}
 
 body>main{margin:0;padding:0;width:100%;min-width:0}
+
+/* Phase 2: readable, flat evidence surfaces; decorative scene stays independent. */
+:root{--space-1:8px;--space-2:16px;--space-3:24px;--space-4:32px;--focus:#c9b7ff;--attention:#f5d7a5}
+.skip-link{position:fixed;left:16px;top:-100px;z-index:100;background:var(--panel);padding:16px}.skip-link:focus{top:8px}
+.status-strip{position:sticky;top:0;z-index:5;background:var(--bg);line-height:1.6}
+.chart-panel{align-self:start}.chart-toolbar{display:flex;flex-wrap:wrap;gap:var(--space-1);margin:var(--space-2) 0}.chart-toolbar label{display:grid;gap:6px;color:var(--muted);font-size:12px}.chart-toolbar select{font:inherit;padding:10px;max-width:100%;background:#15151e;color:var(--text);border:1px solid #454151;border-radius:8px}.chart-toolbar button{align-self:end}
+select:focus-visible,summary:focus-visible,input[type=range]:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.sample-control{display:grid;gap:8px;color:var(--muted);font-size:12px}.sample-control input{width:100%;accent-color:var(--focus)}#sample-value{display:block;min-height:3em;line-height:1.6;font-size:12px;font-variant-numeric:tabular-nums}
+details{border-top:1px solid var(--line);padding:16px 0}summary{cursor:pointer;font-size:13px;line-height:1.6}.price-data{max-height:280px;overflow:auto;margin-top:12px}.price-data table{font-variant-numeric:tabular-nums}.price-data caption{text-align:left;padding:8px;color:var(--muted);font-size:12px}.price-data th{position:sticky;top:0;background:var(--panel)}
+.evidence-panel{border-top:1px solid var(--line);margin-top:16px}.evidence-panel h3{font-size:16px}.evidence-panel dl>div{margin:12px 0}.evidence-panel dt{color:var(--muted);font-size:12px}.evidence-panel dd{margin:4px 0;overflow-wrap:anywhere;font-size:13px;line-height:1.6}.evidence-panel pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;color:var(--muted)}
+#instrument-context,#selected-research{font-size:13px;overflow-wrap:anywhere}.instrument[aria-pressed=true]{background:#332749;text-decoration:underline;text-underline-offset:4px}.chart-panel h2{overflow-wrap:anywhere}td{font-variant-numeric:tabular-nums}.market-layout{align-items:start}#keyboard-help{max-width:min(560px,90vw);padding:24px;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:12px;line-height:1.8}#keyboard-help::backdrop{background:#000b}
+@media(min-width:901px){.table-wrap{max-height:1100px;overflow:auto}.table-wrap thead{position:sticky;top:0;background:var(--panel);z-index:1}.table-wrap .pager{position:sticky;bottom:0;background:var(--panel)}}
+@media(max-width:520px){.small,.eyebrow,.news-card small,.research-card small,.status-strip,.pager{font-size:12px}td small{font-size:12px}th,td{font-size:12px}.table-wrap{overflow-x:auto}#quotes small{max-width:90px}.pager{flex-wrap:wrap}.chart-toolbar label{max-width:100%}.safety-label{font-size:10px}.brand{font-size:15px}.chart-panel,.news-card,.research-card{padding:16px}}

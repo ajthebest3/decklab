@@ -53,3 +53,7 @@ Codex, Claude and AGY CLI launchers are available for deliberate terminal use. I
 ## 10. Planned work
 
 The five-phase roadmap covers foundation, website, native Android, research/learning evaluation and delivery. Experimental algorithms, broader native improvements and final releases are not represented as live capabilities merely because they are planned.
+
+## Phase 2 workspace improvements
+
+Select a market row or research symbol to inspect its chart and source evidence together. Line/area views and time windows use saved samples only. Open **Accessible price data** for the equivalent values, or use the sample slider with arrow keys. The evidence panel includes timestamps, freshness, source and Advanced public JSON. Background refresh preserves selection, chart controls, focus and open disclosures. [Delivery scope and remaining Phase 2 work](PHASE2.md).
