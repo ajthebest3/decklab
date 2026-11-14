@@ -5,7 +5,7 @@ Started 14 November 2026 at the owner's request. This first delivery refines the
 ## First delivery
 
 - Link market rows and research cards to the selected instrument chart, source facts and deterministic research context.
-- Add line/area views, all-samples/last-hour/last-day windows, reset and a keyboard-operated recorded-sample inspector. Range controls filter saved timestamps; they do not fetch unavailable history. Exchange candles cannot be reconstructed from ticker samples, so no candle view is offered.
+- Add line/area views, all-samples/last-hour/last-day windows, reset and a keyboard-operated recorded-sample inspector. The horizontal axis uses elapsed observation time. Range controls filter saved timestamps; they do not fetch unavailable history. Exchange candles cannot be reconstructed from ticker samples, so no candle view is offered.
 - Provide equivalent saved values in an accessible price table, plus structured source evidence and an Advanced JSON disclosure.
 - Patch keyed quote, headline, indicator and provider nodes to preserve focus and open disclosures during refresh. Search, selection, chart settings and sample timestamp survive polling.
 - Replace interval polling with one completion-scheduled refresh chain. Abort superseded requests; reject late search and symbol responses. Suspend routine reads when the tab is hidden, with a 15-second request timeout and refresh interval.
@@ -43,3 +43,7 @@ Run `python3 test_observer.py` for the eight read-only isolation checks. With Pl
 Automated browser coverage is documented in [the report](verification/phase2-browser.json). These checks do not establish screen-reader conformance, complete WCAG contrast conformance or a measured p95 interaction budget. Complete Phase 2 acceptance requires those remaining reviews and broader task delivery.
 
 Rollback this slice by restoring the prior observer HTML/CSS/JS from commit `b72d967`. No store/schema migration or private-runtime restart is required. Deploy by pulling the reviewed source into the existing Codespace; public static assets are read on each request.
+
+## Live evidence
+
+[Workspace screenshot](images/phase2-workspace.png) · [Source and price-table screenshot](images/phase2-evidence.png) · [Live checks](verification/phase2-live.json). Captures show real public observations at the report timestamp.

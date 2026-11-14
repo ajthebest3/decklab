@@ -43,13 +43,13 @@ function evidence(){
 function sample(){
  const i=Number(q('#sample-cursor').value),r=visibleHistory[i];
  q('#sample-value').textContent=r?`${stamp(r.ts)} · ${num(r.price,8)} ${knownAssets.get(symbol)?.currency||''}`:'No recorded sample selected.';
- if(r){cursorTime=r.ts;const x=12+(visibleHistory.length<2?0:i/(visibleHistory.length-1)*496);const line=q('#chart-cursor');if(line){line.setAttribute('x1',x);line.setAttribute('x2',x);}}
+ if(r){cursorTime=r.ts;const duration=visibleHistory.at(-1).ts-visibleHistory[0].ts;const x=12+(duration?(r.ts-visibleHistory[0].ts)/duration*496:0);const line=q('#chart-cursor');if(line){line.setAttribute('x1',x);line.setAttribute('x2',x);}}
 }
 function draw(){
  const windowSeconds=Number(q('#chart-range').value),cutoff=Date.now()/1000-windowSeconds;
  visibleHistory=historySymbol===symbol?history.filter(r=>!windowSeconds||r.ts>=cutoff):[];
  const rows=visibleHistory,values=rows.map(r=>r.price),lo=Math.min(...values),hi=Math.max(...values),span=hi-lo||1;
- if(rows.length>=2){const path=rows.map((r,i)=>(i?'L':'M')+(12+i/(rows.length-1)*496).toFixed(2)+','+(200-(r.price-lo)/span*180).toFixed(2)).join(' ');
+ if(rows.length>=2){const path=rows.map((r,i)=>(i?'L':'M')+(12+(r.ts-rows[0].ts)/(rows.at(-1).ts-rows[0].ts)*496).toFixed(2)+','+(200-(r.price-lo)/span*180).toFixed(2)).join(' ');
  q('#chart').innerHTML=(q('#chart-type').value==='area'?`<path d="${path} L508,200 L12,200 Z" fill="#bea3ff" fill-opacity=".15"/>`:'')+`<path d="${path}" fill="none" stroke="#bea3ff" stroke-width="2"/><line id="chart-cursor" y1="20" y2="200" stroke="#f5d7a5" stroke-dasharray="3 4"/><text x="12" y="218" fill="#b1adbf" font-size="12">${esc(num(lo,6))}</text><text x="12" y="12" fill="#b1adbf" font-size="12">${esc(num(hi,6))}</text>`;
  }else q('#chart').innerHTML='';
  q('#chart-note').textContent=historyStatus==='error'?'History refresh failed. Previous samples retained; they may be stale.':historyStatus==='loading'?'Loading saved observations…':rows.length<2?'Fewer than two recorded samples in this window. No missing prices are invented.':`${rows.length} recorded samples · ${stamp(rows[0].ts)} → ${stamp(rows.at(-1).ts)}`;

@@ -16,7 +16,8 @@ with m.core.db() as c:
     for symbol,base in [('BTC/USD',100),('ETH/USD',50)]:
         c.execute('INSERT OR IGNORE INTO assets VALUES(?,?,?,?,?,?,?,1)',(symbol,symbol,'crypto','Global','USD','Fixture',symbol))
         m.core.store(c,symbol,base,1,1000,now,'Isolated browser fixture')
-        for i in range(20):c.execute('INSERT OR REPLACE INTO history VALUES(?,?,?)',(symbol,now-1200+i*60,base+i))
+        for i in range(20):
+            if i!=10:c.execute('INSERT OR REPLACE INTO history VALUES(?,?,?)',(symbol,now-1200+i*60,base+i))
 http=m.core.ThreadingHTTPServer(('127.0.0.1',0),m.Handler)
 threading.Thread(target=http.serve_forever,daemon=True).start()
 async def main():
@@ -34,6 +35,7 @@ async def main():
         check('Read-only statuses visible','AI off · execution off' in await page.locator('#connection').inner_text())
         await page.locator('#chart-type').select_option('area')
         check('Area chart uses saved samples',await page.locator('#chart path').count()==2)
+        check('Chart x axis reflects elapsed time across sample gaps',await page.evaluate('''() => { const d=document.querySelector('#chart path[fill="none"]').getAttribute('d');const xs=d.match(/[ML][0-9.]+/g).map(s=>Number(s.slice(1))); return Math.abs((xs[10]-xs[9])-2*(xs[1]-xs[0]))<.1; }'''))
         await page.locator('#sample-cursor').focus();await page.keyboard.press('Home')
         first=await page.locator('#sample-value').inner_text();await page.keyboard.press('ArrowRight')
         check('Keyboard sample inspector',first!=await page.locator('#sample-value').inner_text() and '101' in await page.locator('#sample-value').inner_text())

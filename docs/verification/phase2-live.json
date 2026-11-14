@@ -1,0 +1,39 @@
+{
+  "captured_utc": "2026-11-14T19:45:09.888943+00:00",
+  "url": "https://decklab-live-5xw6xv99qvvc7g9j-8790.app.github.dev",
+  "source_revision": "17051da",
+  "health": {
+    "ok": true,
+    "mode": "live-observation",
+    "ai_enabled": false,
+    "execution_enabled": false
+  },
+  "checks": [
+    {
+      "check": "Live Phase 2 controls available",
+      "pass": true
+    },
+    {
+      "check": "Live recorded price table populated",
+      "pass": true
+    },
+    {
+      "check": "Live public evidence includes source",
+      "pass": true
+    },
+    {
+      "check": "AI and execution disabled",
+      "pass": true
+    },
+    {
+      "check": "Live mobile has no page overflow",
+      "pass": true
+    },
+    {
+      "check": "No browser JS errors",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "screenshots": "Actual live observations; viewport emulation, not physical handset."
+}

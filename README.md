@@ -20,6 +20,12 @@ Actual captures of the public deployment. Market values and publisher headlines 
 
 ![DeckLab markets and observed chart](docs/images/live-markets.png)
 
+### Phase 2 workspace
+
+Linked source evidence, recorded-sample chart controls and accessible prices. [Delivery status and remaining work](docs/PHASE2.md).
+
+![DeckLab Phase 2 live market workspace](docs/images/phase2-workspace.png)
+
 ### Publisher research wire
 
 ![DeckLab publisher headlines](docs/images/live-news.png)
