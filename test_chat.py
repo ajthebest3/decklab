@@ -15,6 +15,7 @@ def wait_chat():
  assert not any(lock.locked() for lock in m.CHAT.providers.values())
 class ChatTests(unittest.TestCase):
  def setUp(self):
+  available=patch.object(m.CHAT,"available",return_value=True);available.start();self.addCleanup(available.stop)
   wait_chat()
   with m.db() as c:c.execute('DELETE FROM chat_threads');c.execute('DELETE FROM chat_messages')
   self.snap={'asof':time.time(),'assets':[],'headlines':[],'portfolio':{'cash':100000,'positions':[]}}
