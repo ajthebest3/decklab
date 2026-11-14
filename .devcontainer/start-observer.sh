@@ -4,6 +4,7 @@ if [[ "${CODESPACES:-}" != true ]]; then
   printf '%s\n' 'Observer autostart is restricted to GitHub Codespaces.'
   exit 1
 fi
+cd -- "$(dirname -- "$0")/.."
 umask 077
 mkdir -p data/observer
 chmod 700 data data/observer

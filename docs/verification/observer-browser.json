@@ -10,7 +10,7 @@
     },
     {
       "name": "Instrument search",
-      "pass": false
+      "pass": true
     },
     {
       "name": "Browser watchlist filter",
@@ -22,7 +22,7 @@
     },
     {
       "name": "No horizontal overflow 320",
-      "pass": false
+      "pass": true
     },
     {
       "name": "No horizontal overflow 390",
