@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "name": "WebGL decorative scene ready",
+      "pass": true
+    },
+    {
+      "name": "Explicit no-AI no-execution notice",
+      "pass": true
+    },
+    {
+      "name": "Instrument search",
+      "pass": false
+    },
+    {
+      "name": "Browser watchlist filter",
+      "pass": true
+    },
+    {
+      "name": "Orbit interaction",
+      "pass": true
+    },
+    {
+      "name": "No horizontal overflow 320",
+      "pass": false
+    },
+    {
+      "name": "No horizontal overflow 390",
+      "pass": true
+    },
+    {
+      "name": "No horizontal overflow 768",
+      "pass": true
+    },
+    {
+      "name": "No horizontal overflow 1440",
+      "pass": true
+    },
+    {
+      "name": "No JS errors",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "scope": "Isolated empty observation fixture; screenshot is layout QA, not published live-data evidence"
+}
