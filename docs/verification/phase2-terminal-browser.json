@@ -1,0 +1,158 @@
+{
+  "scope": "Synthetic disposable full terminal fixture; no model or live store access",
+  "checks": [
+    {
+      "name": "Terminal renders complete scanner",
+      "pass": true
+    },
+    {
+      "name": "Last scanner result reachable",
+      "pass": true
+    },
+    {
+      "name": "Full scanner search",
+      "pass": true
+    },
+    {
+      "name": "Accessible candle data",
+      "pass": true
+    },
+    {
+      "name": "Recorded marker resolves exact persisted evidence",
+      "pass": true
+    },
+    {
+      "name": "Terminal input identity preserved",
+      "pass": true
+    },
+    {
+      "name": "Open gate preserved",
+      "pass": true
+    },
+    {
+      "name": "Research draft preserved",
+      "pass": true
+    },
+    {
+      "name": "Scanner selection node preserved",
+      "pass": true
+    },
+    {
+      "name": "Chart canvas preserved",
+      "pass": true
+    },
+    {
+      "name": "Gate provenance visible",
+      "pass": true
+    },
+    {
+      "name": "State refresh retains terminal",
+      "pass": true
+    },
+    {
+      "name": "Route markets",
+      "pass": true
+    },
+    {
+      "name": "Route portfolio",
+      "pass": true
+    },
+    {
+      "name": "Route news",
+      "pass": true
+    },
+    {
+      "name": "Route signals",
+      "pass": true
+    },
+    {
+      "name": "Route research",
+      "pass": true
+    },
+    {
+      "name": "Route bots",
+      "pass": true
+    },
+    {
+      "name": "Route journal",
+      "pass": true
+    },
+    {
+      "name": "Route controls",
+      "pass": true
+    },
+    {
+      "name": "Route guide",
+      "pass": true
+    },
+    {
+      "name": "Route overview",
+      "pass": true
+    },
+    {
+      "name": "Private layout width 320",
+      "pass": true
+    },
+    {
+      "name": "Private layout width 390",
+      "pass": true
+    },
+    {
+      "name": "Private layout width 768",
+      "pass": true
+    },
+    {
+      "name": "Private layout width 1440",
+      "pass": true
+    },
+    {
+      "name": "Private terminal at 200% text",
+      "pass": true
+    },
+    {
+      "name": "Stable rendering submits one settings request",
+      "pass": true
+    },
+    {
+      "name": "Admin uncertain delivery remains explicit",
+      "pass": true
+    },
+    {
+      "name": "Admin queue focus and draft survive refresh",
+      "pass": true
+    },
+    {
+      "name": "Day Trader waiting and skipped cards",
+      "pass": true
+    },
+    {
+      "name": "Day Trader unaffordable plan readable",
+      "pass": true
+    },
+    {
+      "name": "Day Trader result identity and form draft retained",
+      "pass": true
+    },
+    {
+      "name": "Day Trader width 320",
+      "pass": true
+    },
+    {
+      "name": "Day Trader width 390",
+      "pass": true
+    },
+    {
+      "name": "Day Trader width 768",
+      "pass": true
+    },
+    {
+      "name": "Day Trader width 1440",
+      "pass": true
+    },
+    {
+      "name": "No JS errors",
+      "pass": true
+    }
+  ],
+  "errors": []
+}

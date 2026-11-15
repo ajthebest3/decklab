@@ -1,0 +1,206 @@
+{
+  "scope": "Phase 2 complete public workspace; isolated synthetic fixture, not market evidence",
+  "checks": [
+    {
+      "name": "Real saved samples exposed as table",
+      "pass": true
+    },
+    {
+      "name": "Read-only statuses visible",
+      "pass": true
+    },
+    {
+      "name": "Area chart uses saved samples",
+      "pass": true
+    },
+    {
+      "name": "Chart x axis reflects elapsed time across sample gaps",
+      "pass": true
+    },
+    {
+      "name": "Keyboard sample inspector",
+      "pass": true
+    },
+    {
+      "name": "Refresh preserves exact focused button",
+      "pass": true
+    },
+    {
+      "name": "Refresh reuses keyed row",
+      "pass": true
+    },
+    {
+      "name": "Refresh preserves chart type and evidence disclosure",
+      "pass": true
+    },
+    {
+      "name": "Late symbol response cannot repaint selected evidence",
+      "pass": true
+    },
+    {
+      "name": "Late search response rejected",
+      "pass": true
+    },
+    {
+      "name": "Watchlist survives keyed rendering",
+      "pass": true
+    },
+    {
+      "name": "Empty results explicit",
+      "pass": true
+    },
+    {
+      "name": "Failed refresh keeps observations and offers retry",
+      "pass": true
+    },
+    {
+      "name": "Keyboard help dialog opens",
+      "pass": true
+    },
+    {
+      "name": "Dialog closes with keyboard",
+      "pass": true
+    },
+    {
+      "name": "Layout keyboard resize bounded",
+      "pass": true
+    },
+    {
+      "name": "Classic composition rollback available",
+      "pass": true
+    },
+    {
+      "name": "Phase 2 composition restores",
+      "pass": true
+    },
+    {
+      "name": "Layout persists across reload",
+      "pass": true
+    },
+    {
+      "name": "Layout reset works",
+      "pass": true
+    },
+    {
+      "name": "Command search updates full catalog",
+      "pass": true
+    },
+    {
+      "name": "Shared URL restores symbol and chart settings",
+      "pass": true
+    },
+    {
+      "name": "Breadth reports full coverage and windows",
+      "pass": true
+    },
+    {
+      "name": "Workspace navigation current state",
+      "pass": true
+    },
+    {
+      "name": "Accessibility tree exposes navigation and chart controls",
+      "pass": true
+    },
+    {
+      "name": "Cached chart p95 below 100ms on this runner",
+      "pass": true
+    },
+    {
+      "name": "Semantic token text contrast at least 4.5:1",
+      "pass": true
+    },
+    {
+      "name": "Observation evidence remains separate from private capabilities",
+      "pass": true
+    },
+    {
+      "name": "Hidden tab suspends routine reads",
+      "pass": true
+    },
+    {
+      "name": "Visible tab resumes reads",
+      "pass": true
+    },
+    {
+      "name": "No page overflow 320",
+      "pass": true
+    },
+    {
+      "name": "No page overflow 390",
+      "pass": true
+    },
+    {
+      "name": "No page overflow 768",
+      "pass": true
+    },
+    {
+      "name": "No page overflow 1440",
+      "pass": true
+    },
+    {
+      "name": "200% computed text at 390 does not overflow page",
+      "pass": true
+    },
+    {
+      "name": "Reduced motion scene remains off",
+      "pass": true
+    },
+    {
+      "name": "No browser JavaScript errors",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "device": "Headless Chromium / Linux software WebGL; viewport emulation, not physical handset",
+  "performance": {
+    "p95_ms": 17.599999994039536,
+    "samples_ms": [
+      3.300000011920929,
+      7.4000000059604645,
+      15.799999982118607,
+      15.900000005960464,
+      16.19999998807907,
+      16.30000001192093,
+      16.30000001192093,
+      16.400000005960464,
+      16.400000005960464,
+      16.400000005960464,
+      16.5,
+      16.5,
+      16.599999994039536,
+      16.599999994039536,
+      16.599999994039536,
+      16.69999998807907,
+      16.69999998807907,
+      16.700000017881393,
+      16.799999982118607,
+      16.80000001192093,
+      16.80000001192093,
+      16.80000001192093,
+      16.80000001192093,
+      16.899999976158142,
+      16.900000005960464,
+      16.900000005960464,
+      17.399999976158142,
+      17.400000005960464,
+      17.599999994039536,
+      18.19999998807907
+    ],
+    "runner": "Headless Chromium, Linux software rendering, 1440x1000, reduced motion; local fixture"
+  },
+  "contrast": {
+    "text/bg": 18.122383011813973,
+    "text/panel": 17.27303843206147,
+    "muted/bg": 9.308471074850377,
+    "muted/panel": 8.872209494458154,
+    "good/bg": 13.416010269675263,
+    "good/panel": 12.78724000270627,
+    "bad/bg": 11.670463317328197,
+    "bad/panel": 11.123501874381574,
+    "attention/bg": 14.687318998297835,
+    "attention/panel": 13.998966104852858,
+    "focus/bg": 11.346551278269416,
+    "focus/panel": 10.814770671888922
+  },
+  "limits": "Automated AX tree and semantic token contrast; manual assistive technology and physical handset acceptance are not claimed."
+}

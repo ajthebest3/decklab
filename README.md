@@ -22,7 +22,7 @@ Actual captures of the public deployment. Market values and publisher headlines 
 
 ### Phase 2 workspace
 
-Linked source evidence, recorded-sample chart controls and accessible prices. [Delivery status and remaining work](docs/PHASE2.md).
+Linked source evidence, recorded-sample chart controls and accessible prices. Saved layouts, source-specific breadth and full terminal refinement are implemented. [Delivery status and validation limits](docs/PHASE2.md).
 
 ![DeckLab Phase 2 live market workspace](docs/images/phase2-workspace.png)
 

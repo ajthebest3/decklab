@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Public, read-only market observation. No AI, orders, bots or account endpoints."""
+import math
 import concurrent.futures
 import json
 import os
@@ -86,6 +87,16 @@ def state(params):
         providers=core.rows(c,'SELECT name,state,message,checked FROM providers ORDER BY name')
         signals=core.signals(c)
         observed=c.execute('SELECT COUNT(*) FROM quotes').fetchone()[0]
+        breadth_rows=core.rows(c,"SELECT a.kind,q.source,q.change,q.asof,q.fetched FROM assets a LEFT JOIN quotes q USING(symbol) WHERE a.tracked=1")
+    breadth={}
+    for a in breadth_rows:
+        source=a['source'] or 'No provider observation'; key=(a['kind'],source)
+        b=breadth.setdefault(key,dict(kind=a['kind'],source=source,total=0,up=0,down=0,flat=0,missing=0,oldest=None,newest=None,window='Since UTC daily open' if source.startswith('Kraken spot') else 'Provider-reported change; baseline may vary'))
+        b['total']+=1
+        fresh=bool(a['asof'] and a['fetched'] and 0<=time.time()-a['asof']<=(120 if a['kind']=='crypto' else 300) and 0<=time.time()-a['fetched']<=120)
+        if not fresh or not isinstance(a['change'],(int,float)) or not math.isfinite(a['change']):b['missing']+=1;continue
+        b['up' if a['change']>0 else 'down' if a['change']<0 else 'flat']+=1
+        b['oldest']=min(b['oldest'] or a['asof'],a['asof']);b['newest']=max(b['newest'] or a['asof'],a['asof'])
     for a in assets:
         receipt_only=(a['source'] or '').startswith('Kraken spot')
         a['exchange_timestamp']=None if receipt_only else a['asof']
@@ -96,7 +107,7 @@ def state(params):
     for item in research:item['fresh']=bool(item['asof'] and 0<=time.time()-item['asof']<=120)
     return {'mode':'live-observation','ai_enabled':False,'execution_enabled':False,'now':time.time(),
             'runtime':dict(STATUS),'assets':assets,'total':total,'offset':offset,'limit':limit,'observed':observed,
-            'news':news,'providers':providers,'research':research,
+            'news':news,'providers':providers,'research':research,'breadth':list(breadth.values()),
             'notice':'Public feeds can be delayed, partial or unavailable. Kraken times are receipt times. No AI, forecasts, account data or order execution. Indicators need at least 15 recorded samples.'}
 
 class Handler(core.Handler):
@@ -122,7 +133,7 @@ class Handler(core.Handler):
             if path.path=='/api/observer/history':
                 symbol=str(params.get('symbol',['BTC/USD'])[0])[:40]
                 with core.db() as c:return self.send(core.rows(c,'SELECT ts,price FROM (SELECT ts,price FROM history WHERE symbol=? ORDER BY ts DESC LIMIT 96) ORDER BY ts',(symbol,)))
-            allowed={'/':'observer.html','/observer.js':'observer.js','/observer.css':'observer.css','/style.css':'style.css','/vendor/new-era.js':'vendor/new-era.js'}
+            allowed={'/':'observer.html','/observer.js':'observer.js','/observer.css':'observer.css','/workspace.js':'workspace.js','/workspace.css':'workspace.css','/style.css':'style.css','/vendor/new-era.js':'vendor/new-era.js'}
             if path.path not in allowed:return self.send({'error':'Not found'},404)
             p=ROOT/'static'/allowed[path.path]
             return self.send(p.read_bytes(),ctype='text/html; charset=utf-8' if p.suffix=='.html' else 'application/javascript' if p.suffix=='.js' else 'text/css')

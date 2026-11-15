@@ -21,3 +21,9 @@ Current public-profile results and screenshot checks are written separately. A b
 Inspect /api/health for live-observation mode with ai_enabled=false and execution_enabled=false. Inspect source timestamps/provider results to determine freshness; HTTP200 alone does not prove every provider is current.
 
 Live source verification must never place an order, submit a model prompt or copy a personal ledger.
+
+## Phase 2 website checks
+
+Run `python tools/check_phase2_workspace.py docs/verification/phase2-workspace-browser.json` and `python tools/check_phase2_terminal.py` with Playwright/Chromium. Both use disposable fixture stores, without feed workers or model calls. Admin and Day Trader HTTP records in the browser test are synthetic interceptions. Full terminal checks do not contact an owner session or use a personal database.
+
+`test_observer.py` additionally verifies that breadth spans the full catalog independently of the current search/page and excludes stale changes. Reports distinguish automated accessibility-tree/token-contrast checks from unperformed manual assistive-technology review.

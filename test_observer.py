@@ -49,6 +49,19 @@ class ObserverTests(unittest.TestCase):
         self.assertEqual(data['total'],2)
         self.assertEqual({a['symbol'] for a in data['assets']},{'AAPL','MSFT'})
         self.assertEqual(self.request('/api/observer/state?pins=%7B%7D')[0],400)
+    def test_breadth_uses_full_catalog_and_excludes_stale_changes(self):
+        now=time.time()
+        with m.core.db() as c:
+            for name,change,age,source in [('P2UP',1,0,'Kraken spot fixture'),('P2DOWN',-1,0,'Kraken spot fixture'),('P2STALE',50,1000,'Kraken spot fixture'),('P2OTHER',2,0,'Other window fixture')]:
+                c.execute('INSERT OR REPLACE INTO assets VALUES(?,?,?, ?,?,?,?,1)',(name,name,'crypto','Global','USD','Kraken',name))
+                m.core.store(c,name,100,change,1000,now-age,source)
+        data=self.request('/api/observer/state?q=P2UP&limit=1')[1]
+        b=next(b for b in data['breadth'] if b['source']=='Kraken spot fixture')
+        self.assertEqual((b['total'],b['up'],b['down'],b['flat'],b['missing']),(3,1,1,0,1))
+        self.assertEqual(b['window'],'Since UTC daily open')
+        self.assertTrue(any(b['source']=='Other window fixture' for b in data['breadth']))
+        self.assertEqual(data['total'],1)
+
     def test_no_model_or_order_calls_for_reads(self):
         with patch.object(m.core.MIRAI,'request',side_effect=AssertionError('AI prohibited')),patch.object(m.core,'execute_order',side_effect=AssertionError('Execution prohibited')):
             self.assertEqual(self.request('/api/observer/state')[0],200)

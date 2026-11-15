@@ -36,9 +36,7 @@ class TerminalEngine:
             a['eligible_market_data'] = markets.eligible(a)
         supported = [a for a in assets if a['execution_supported']]
         supported.sort(key=lambda a:(not a['quote_fresh'],a['market_group'],a['symbol']))
-        displayed=[]
-        for group,limit in [('india',80),('stocks',220),('crypto',100),('forex',20),('gold',20)]:
-            displayed.extend([a for a in supported if a['market_group']==group][:limit])
+        displayed=supported
         focus = next((a for a in assets if a['symbol']==symbol), None)
         if symbol and not focus:raise ValueError('Choose a tracked instrument with observed prices')
         if focus is None:focus = next((a for a in supported if a['market_group']=='india'), None) or next(iter(supported), None)

@@ -7,6 +7,10 @@ let offset=0,query='',generation=0,pinsOnly=false,symbol='BTC/USD',last=null;
 let stateRequest,historyRequest,historyGeneration=0,pollTimer,searchTimer,searchPending=false;
 let history=[],visibleHistory=[],historySymbol='',historyStatus='loading',cursorTime=null;
 const knownAssets=new Map();
+const initialParams=new URLSearchParams(location.search);if(initialParams.get('symbol')&&initialParams.get('symbol').length<=40){symbol=initialParams.get('symbol');query=symbol;q('#search').value=symbol;}
+function permalink(){const u=new URL(location.href);u.searchParams.set('symbol',symbol);u.searchParams.set('range',q('#chart-range').value);u.searchParams.set('view',q('#chart-type').value);window.history.replaceState(null,'',u);}
+if(['0','3600','86400'].includes(initialParams.get('range')))q('#chart-range').value=initialParams.get('range');
+if(['line','area'].includes(initialParams.get('view')))q('#chart-type').value=initialParams.get('view');
 let pins;try{const v=JSON.parse(localStorage.getItem('decklab-observer-watchlist')||'[]');pins=new Set(Array.isArray(v)?v.filter(s=>typeof s==='string'&&s.length<=40).slice(0,100):[]);}catch{pins=new Set();}
 // Patch existing nodes instead of rebuilding polling surfaces. Focus, scroll and
 // open evidence disclosures belong to the reader and survive background updates.
@@ -46,6 +50,7 @@ function sample(){
  if(r){cursorTime=r.ts;const duration=visibleHistory.at(-1).ts-visibleHistory[0].ts;const x=12+(duration?(r.ts-visibleHistory[0].ts)/duration*496:0);const line=q('#chart-cursor');if(line){line.setAttribute('x1',x);line.setAttribute('x2',x);}}
 }
 function draw(){
+ permalink();
  const windowSeconds=Number(q('#chart-range').value),cutoff=Date.now()/1000-windowSeconds;
  visibleHistory=historySymbol===symbol?history.filter(r=>!windowSeconds||r.ts>=cutoff):[];
  const rows=visibleHistory,values=rows.map(r=>r.price),lo=Math.min(...values),hi=Math.max(...values),span=hi-lo||1;
@@ -69,6 +74,7 @@ async function chart(){
 }
 function render(data){
  last=data;for(const a of data.assets)knownAssets.set(a.symbol,a);
+ sync('#breadth-cells',(data.breadth||[]).map(b=>{const n=b.total||1;return `<article class="breadth-cell" data-key="${esc(b.kind+'|'+b.source)}"><h3>${esc(b.kind)}</h3><p>${esc(b.source)}</p><div class="breadth-bar" aria-hidden="true"><span class="up" style="width:${b.up/n*100}%"></span><span class="down" style="width:${b.down/n*100}%"></span><span class="flat" style="width:${b.flat/n*100}%"></span></div><p>↑ ${b.up} advancing · ↓ ${b.down} declining · = ${b.flat} unchanged<br>${b.missing} missing / stale · ${b.total} tracked</p><p>${esc(b.window)}<br>Oldest included: ${esc(stamp(b.oldest))}<br>Newest: ${esc(stamp(b.newest))}</p></article>`;}).join('')||'<p data-key="empty">No breadth observations available.</p>');
  sync('#quotes',data.assets.map(a=>`<tr data-key="${esc(a.symbol)}"><td><button data-pin="${esc(a.symbol)}" aria-label="Track ${esc(a.symbol)}" aria-pressed="${pins.has(a.symbol)}">${pins.has(a.symbol)?'★':'☆'}</button></td><td><button class="instrument" data-symbol="${esc(a.symbol)}" aria-pressed="${a.symbol===symbol}">${esc(a.symbol)}</button><small>${esc(a.name)}</small></td><td>${esc(price(a))}</td><td class="${a.change>=0?'positive':'negative'}">${esc(num(a.change))}${Number.isFinite(a.change)?'%':''}</td><td><span class="${a.fresh?'positive':'stale'}">${a.fresh?'Observed recently':'Stale / unavailable'}</span><small>${esc(stamp(a.asof))}</small><small>${esc(a.timestamp_basis)}</small></td></tr>`).join('')||`<tr data-key="empty"><td colspan="5" class="empty-state">${pinsOnly?'No pinned instruments match this search.':'No matching observations yet.'}</td></tr>`);
  q('#page-info').textContent=Math.min(data.offset+1,data.total)+'–'+Math.min(data.offset+data.limit,data.total)+' / '+data.total;q('#previous').disabled=offset===0;q('#next').disabled=offset+data.limit>=data.total;
  sync('#headlines',data.news.map(n=>{let url;try{url=new URL(n.url);if(!['https:','http:'].includes(url.protocol))return '';}catch{return '';}
@@ -95,3 +101,7 @@ q('#chart-reset').onclick=()=>{q('#chart-range').value='0';q('#chart-type').valu
 q('#help').onclick=()=>q('#keyboard-help').showModal();q('#close-help').onclick=()=>q('#keyboard-help').close();
 document.addEventListener('visibilitychange',()=>{clearTimeout(pollTimer);if(document.hidden){++generation;++historyGeneration;stateRequest?.abort();historyRequest?.abort();q('#refresh').setAttribute('aria-busy','false');}else refresh();});
 refresh();
+
+const command=q('#command-dialog');q('#command-open').onclick=()=>{command.showModal();q('#command-query').focus();};q('#command-close').onclick=()=>command.close();q('#command-form').onsubmit=e=>{e.preventDefault();q('#search').value=q('#command-query').value;q('#search').dispatchEvent(new Event('input'));command.close();location.hash='markets';q('#search').focus();};command.addEventListener('click',e=>{if(e.target.closest('a'))command.close();});
+document.addEventListener('keydown',e=>{if(e.key==='/'&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!e.target.closest('input,textarea,select,[contenteditable=true]')&&!document.querySelector('dialog[open]')){e.preventDefault();q('#command-open').click();}});
+function navState(){const hash=location.hash||'#markets';document.querySelectorAll('.workspace-nav a').forEach(a=>{if(a.hash===hash)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});}window.addEventListener('hashchange',navState);navState();

@@ -507,7 +507,7 @@ class Handler(BaseHTTPRequestHandler):
    if path.path in ('/vendor/new-era.js','/vendor/lightweight-charts.js','/vendor/lightweight-charts.LICENSE.txt','/vendor/lightweight-charts.NOTICE.txt'):
     artifact=ROOT/'static'/path.path.lstrip('/')
     return self.send(artifact.read_bytes(),ctype='application/javascript' if artifact.suffix=='.js' else 'text/plain; charset=utf-8')
-   files={'/day-trader':'day-trader.html','/day-trader.html':'day-trader.html','/day-trader.js':'day-trader.js','/day-trader.css':'day-trader.css','/terminal.js':'terminal.js','/terminal.css':'terminal.css','/':'index.html','/app.js':'app.js','/coverage.js':'coverage.js','/demo.js':'demo.js','/demo.css':'demo.css','/ai-settings.js':'ai-settings.js','/admin.js':'admin.js','/style.css':'style.css'}
+   files={'/day-trader':'day-trader.html','/day-trader.html':'day-trader.html','/day-trader.js':'day-trader.js','/day-trader.css':'day-trader.css','/terminal.js':'terminal.js','/terminal.css':'terminal.css','/workspace.js':'workspace.js','/workspace.css':'workspace.css','/':'index.html','/app.js':'app.js','/coverage.js':'coverage.js','/demo.js':'demo.js','/demo.css':'demo.css','/ai-settings.js':'ai-settings.js','/admin.js':'admin.js','/style.css':'style.css'}
    if path.path in files:
     f=ROOT/'static'/files[path.path];ctype='text/html; charset=utf-8' if f.suffix=='.html' else 'application/javascript' if f.suffix=='.js' else 'text/css';return self.send(f.read_bytes(),ctype=ctype)
    return self.send({'error':'Not found'},404)

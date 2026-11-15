@@ -50,7 +50,7 @@ let S = null,
   chartGeneration = 0,
   fetching = null;
 const navs = [
-  ["demo", "◉", "Trading Portfolio", "Trading Portfolio", "$1M virtual wallet · USD / INR · observed execution and point-only learning"],
+  ["demo", "◉", "Simulation Portfolio", "Simulation Portfolio", "$1M virtual wallet · USD / INR · observed execution and point-only learning"],
   [
     "overview",
     "◈",
@@ -128,15 +128,25 @@ $("#navigation").innerHTML = navs
       `<a href="#${id}" data-nav="${id}" title="${label}"><span class="nav-icon">${icon}</span><span class="nav-label">${label}</span></a>`,
   )
   .join("");
+const viewReads = new Set();
 async function api(path, body) {
+  const controller = new AbortController();
+  if (!body) viewReads.add(controller);
+  const deadline = setTimeout(() => controller.abort(), 15000);
+  try {
   let r = await fetch("/api/" + path, {
     method: body ? "POST" : "GET",
+    signal: controller.signal,
     headers: body ? { "Content-Type": "application/json" } : {},
     body: body ? JSON.stringify(body) : undefined,
   });
   let d = await r.json();
   if (!r.ok) throw new Error(d.error || "Request failed");
   return d;
+  } catch (error) {
+    if (controller.signal.aborted && body) throw new Error("Response not confirmed. Check saved records before retrying the same request. Your draft is retained.");
+    throw error;
+  } finally { clearTimeout(deadline); viewReads.delete(controller); }
 }
 let toastTimer;
 function toast(t, error = false) {
@@ -367,6 +377,8 @@ function guide() {
   ];
   return `<div class="guide-grid">${cards.map(([h, p]) => `<section class="panel panel-body"><h3>${h}</h3><p>${p}</p></section>`).join("")}</div><section class="panel panel-body section-space"><h3>Access from your laptop</h3><p class="note" style="margin-top:10px">This terminal runs on the GCP server's loopback interface. Forward the port through your existing SSH connection, then open localhost on your laptop.</p><code class="command">ssh -L 8790:127.0.0.1:8790 YOUR_EXISTING_SSH_HOST</code></section>`;
 }
+let viewBindings = new AbortController();
+function listen(node, event, handler) { if (node) node.addEventListener(event, handler, {signal:viewBindings.signal}); }
 function render() {
   if (!S) return;
   let n = navs.find((x) => x[0] === route) || navs[0];
@@ -399,10 +411,15 @@ function render() {
       guide,
     }[route] || overview
   )();
-  $("#view").innerHTML = readinessBanner() +
+  const nextView = readinessBanner() +
     (S.settings.kill_switch
       ? '<div class="banner">■ Original paper account stopped: manual and automatic buys/sells are blocked. Holdings remain. Simulation and research have separate controls.</div>'
       : "") + html;
+  const host = $("#view");
+  if (host.dataset.workspaceRoute === route && window.DeckWorkspace) window.DeckWorkspace.update(host, nextView, {preserveInputs:viewDirty()});
+  else { host.innerHTML = nextView; host.dataset.workspaceRoute = route; }
+  viewBindings.abort();
+  viewBindings = new AbortController();
   bindView();
   bindUpgrades();
   if (route === "overview") {
@@ -415,7 +432,7 @@ function readinessBanner() {
   if (!readinessState) return '<div class="notice" role="status">Resource health and owner pause are unknown. Legacy connection; quote timestamps remain authoritative.</div>';
   const r = readinessState;
   const paused = r.owner_pause?.active === true;
-  return '<div class="notice" role="status">' + (paused ? 'Owner pause is active. Research/service activation is separate. ' : 'Owner pause state: ' + esc(r.owner_pause?.state || 'unknown') + '. ') +
+  return '<div class="notice workspace-status" role="status">' + (paused ? 'Owner pause is active. Research/service activation is separate. ' : 'Owner pause state: ' + esc(r.owner_pause?.state || 'unknown') + '. ') +
     'Quotes: ' + esc(r.resources?.quotes?.state || 'unknown') + ' · FX: ' + esc(r.resources?.fx?.state || 'unknown') +
     ' · Executable books: ' + esc(r.resources?.executable_books?.state || 'unknown') + ' · Model identity: upstream unverified.</div>';
 }
@@ -452,7 +469,7 @@ function bindView() {
         render();
       }),
   );
-  $("#chart-symbol")?.addEventListener("change", (e) => choose(e.target.value));
+  listen($("#chart-symbol"), "change", (e) => choose(e.target.value));
   $$("[data-page]").forEach(
     (el) =>
       (el.onclick = () => {
@@ -460,7 +477,7 @@ function bindView() {
         render();
       }),
   );
-  $("#market-query")?.addEventListener("input", (e) => {
+  listen($("#market-query"), "input", (e) => {
     query = e.target.value;
     page = 0;
     let p = e.target.selectionStart;
@@ -469,18 +486,18 @@ function bindView() {
     x.focus();
     x.setSelectionRange(p, p);
   });
-  $("#kind-filter")?.addEventListener("change", (e) => {
+  listen($("#kind-filter"), "change", (e) => {
     marketFilter = e.target.value;
     page = 0;
     render();
   });
-  $("#region-filter")?.addEventListener("change", (e) => {
+  listen($("#region-filter"), "change", (e) => {
     region = e.target.value;
     page = 0;
     render();
   });
   for (let sel of ["#news-query", "#news-source"])
-    $(sel)?.addEventListener("input", () => {
+    listen($(sel), "input", () => {
       newsQuery = $("#news-query").value;
       newsSource = $("#news-source").value;
       if (window.loadNewsArchive) window.loadNewsArchive();
@@ -500,19 +517,19 @@ function bindView() {
         }
       }),
   );
-  $("#toggle-auto")?.addEventListener("click", () =>
+  listen($("#toggle-auto"), "click", () =>
     mutate(
       "settings",
       { autopilot: !S.settings.autopilot },
       "Paper strategy " + (S.settings.autopilot ? "paused" : "enabled"),
     ),
   );
-  $("#resume")?.addEventListener("click", () => {
+  listen($("#resume"), "click", () => {
     const stopping = !S.settings.kill_switch;
     if (!confirm((stopping ? "Stop" : "Resume") + " original paper account at " + location.origin + "? Manual and automatic buys/sells are affected. Holdings remain. Independent simulation/research and the full-service owner pause are unaffected.")) return;
     mutate("settings", { kill_switch: stopping }, "Original-account execution control updated");
   });
-  $("#limits-form")?.addEventListener("submit", (e) => {
+  listen($("#limits-form"), "submit", (e) => {
     e.preventDefault();
     mutate(
       "settings",
@@ -522,7 +539,7 @@ function bindView() {
       "Risk limits saved",
     );
   });
-  $("#alert-form")?.addEventListener("submit", (e) => {
+  listen($("#alert-form"), "submit", (e) => {
     e.preventDefault();
     mutate(
       "alerts",
@@ -572,6 +589,7 @@ async function mutate(path, body, message) {
   }
 }
 async function refresh() {
+  if (document.hidden) return;
   if (fetching) return fetching;
   fetching = (async () => {
     try {
@@ -1209,17 +1227,17 @@ function bindUpgrades() {
         render();
       }),
   );
-  $("#saved-filter")?.addEventListener("click", () => {
+  listen($("#saved-filter"), "click", () => {
     savedOnly = !savedOnly;
     page = 0;
     render();
   });
-  $("#fresh-filter")?.addEventListener("click", () => {
+  listen($("#fresh-filter"), "click", () => {
     freshOnly = !freshOnly;
     page = 0;
     render();
   });
-  $("#view-watchlist")?.addEventListener("click", () => {
+  listen($("#view-watchlist"), "click", () => {
     savedOnly = true;
     marketFilter = region = "all";
     query = "";
@@ -1241,13 +1259,13 @@ function bindUpgrades() {
         render();
       }),
   );
-  $("#chart-sma")?.addEventListener("click", () => {
+  listen($("#chart-sma"), "click", () => {
     showSma = !showSma;
     localStorage.setItem("deck-sma", showSma);
     render();
   });
-  $("#chart-retry")?.addEventListener("click", loadChart);
-  $("#chart-export")?.addEventListener("click", () => {
+  listen($("#chart-retry"), "click", loadChart);
+  listen($("#chart-export"), "click", () => {
     if (!bars.length) {
       toast("No candles to export.", true);
       return;
@@ -1272,14 +1290,14 @@ function bindUpgrades() {
       "text/csv",
     );
   });
-  $("#liquidity-details")?.addEventListener("toggle", (e) => {
+  listen($("#liquidity-details"), "toggle", (e) => {
     liquidityOpen = e.target.open;
     if (liquidityOpen) loadBook();
   });
-  $("#research-note")?.addEventListener("input", (e) =>
+  listen($("#research-note"), "input", (e) =>
     noteDrafts.set(selected, e.target.value),
   );
-  $("#note-form")?.addEventListener("submit", async (e) => {
+  listen($("#note-form"), "submit", async (e) => {
     e.preventDefault();
     let symbol = selected,
       body = $("#research-note").value,
@@ -1306,7 +1324,7 @@ function bindUpgrades() {
         if (el.type === "checkbox") el.checked = draft[el.name];
         else el.value = draft[el.name];
       }
-    form.addEventListener("input", () => {
+    listen(form, "input", () => {
       dirtyForms.add(id);
       let values = {};
       for (let el of form.elements)
@@ -1316,7 +1334,7 @@ function bindUpgrades() {
     });
   }
 
-  $("#research-settings-form")?.addEventListener("submit", async (e) => {
+  listen($("#research-settings-form"), "submit", async (e) => {
     e.preventDefault();
     let f = new FormData(e.target),
       body = {
@@ -1341,7 +1359,7 @@ function bindUpgrades() {
       btn.disabled = false;
     }
   });
-  $("#run-research")?.addEventListener("click", async (e) => {
+  listen($("#run-research"), "click", async (e) => {
     e.target.disabled = true;
     try {
       await api("research-run", {});
@@ -1559,10 +1577,12 @@ $("#stop").onclick = () => {
 };
 window.addEventListener("resize", drawChart);
 window.addEventListener("hashchange", () => {
-  route = location.hash.slice(1) || "overview";
+  route = ({learning:'bots',alerts:'journal',connections:'controls',admin:'controls'})[location.hash.slice(1)] || location.hash.slice(1) || "overview";
   document.body.classList.remove("nav-open");
   $("#menu-toggle").setAttribute("aria-expanded", "false");
   render();
+  $("#heading").setAttribute("tabindex","-1");
+  $("#heading").focus({preventScroll:true});
   window.scrollTo(0, 0);
 });
 setInterval(() => {
@@ -1571,11 +1591,13 @@ setInterval(() => {
     " LOCAL";
   updateCountdowns();
 }, 1000);
-setInterval(refresh, 10000);
+let statePoll;
+async function pollState(){clearTimeout(statePoll);await refresh();if(!document.hidden)statePoll=setTimeout(pollState,10000);}
+document.addEventListener('visibilitychange',()=>{clearTimeout(statePoll);if(document.hidden){++chartGeneration;for(const c of viewReads)c.abort();}else pollState();});
 setInterval(() => {
-  if (route === "overview") loadChart();
+  if (!document.hidden && route === "overview") loadChart();
 }, 60000);
-route = location.hash.slice(1) || "overview";
+route = ({learning:'bots',alerts:'journal',connections:'controls',admin:'controls'})[location.hash.slice(1)] || location.hash.slice(1) || "overview";
 $("#view").innerHTML =
   '<div class="loading">Connecting to your local market engine…</div>';
-refresh();
+pollState();

@@ -1,49 +1,37 @@
-# Phase 2 — public workspace refinement
+# Phase 2 — website implementation delivery
 
-Started 14 November 2026 at the owner's request. This first delivery refines the existing public observer. Phase 2 as a whole remains **in progress**; native, private account, execution and admin interfaces are outside this public release.
+Implemented 15 November 2026. Public observer changes are deployable on the existing Codespace; private terminal changes are source-only under the continuing owner pause. **Implementation is complete; manual assistive-technology acceptance remains unverified.** This is not a Phase 3 native release or Phase 5 operational sign-off.
 
-## First delivery
+## Delivered
 
-- Link market rows and research cards to the selected instrument chart, source facts and deterministic research context.
-- Add line/area views, all-samples/last-hour/last-day windows, reset and a keyboard-operated recorded-sample inspector. The horizontal axis uses elapsed observation time. Range controls filter saved timestamps; they do not fetch unavailable history. Exchange candles cannot be reconstructed from ticker samples, so no candle view is offered.
-- Provide equivalent saved values in an accessible price table, plus structured source evidence and an Advanced JSON disclosure.
-- Patch keyed quote, headline, indicator and provider nodes to preserve focus and open disclosures during refresh. Search, selection, chart settings and sample timestamp survive polling.
-- Replace interval polling with one completion-scheduled refresh chain. Abort superseded requests; reject late search and symbol responses. Suspend routine reads when the tab is hidden, with a 15-second request timeout and refresh interval.
-- Retain observations after an unsuccessful refresh and show a retry explanation. Add keyboard help and a skip link; improve metadata readability on narrow screens.
+- Shared New Era black semantic tokens, readable flat evidence surfaces, consistent Simulation Portfolio naming and scoped status. Black-only is the latest owner direction, superseding the older mandatory light theme.
+- Workspace navigation and symbol search, unchanged old deep links, compatibility aliases in the full terminal, and shareable public symbol/chart URLs.
+- Keyboard-adjustable desktop panel split (35–65%), compact rows, origin-local persistence and reset. A Phase 2 workspace toggle restores the classic composition; `?workspace=classic` provides a visit-only fallback. Preferences contain layout values only.
+- Source-specific breadth across the full tracked public catalog, with advancing/declining/unchanged/missing counts, freshness exclusions, source windows and included timestamps. The private terminal has equivalent scoped counts. Providers with different baselines are not presented as one market return.
+- Linked instrument/source/research context; public line/area/range/reset and saved-sample inspector/table; full terminal provider candles/line, accessible OHLC table and links to exact persisted fill evidence. Public ticker samples never become invented candles or fills.
+- Complete private scanner paging/search over supported tracked instruments. The former per-group and first-80 truncations are removed; public catalog paging stays server-side.
+- Keyed refreshes preserve input identity, focus, disclosures, drafts, scanner selection and chart canvas/viewport. Render bindings are replaced through one AbortController to prevent duplicated submissions.
+- Completion-scheduled refreshes, bounded requests, lifecycle suspension and stale-response rejection. Mutating request timeouts explain uncertain delivery; existing request identities and drafts remain.
+- Structured entry-check explanations with bot/instrument/source/snapshot provenance, explicit distinction from saved admission verdicts, exact fill detail, structured Day Trader waiting/skipped/unaffordable/replay evidence and stable Admin queue records. Advanced JSON remains available.
 
-## Scope and data contract
+## Scope
 
-Existing HTTP contracts are unchanged. Only these existing read endpoints are used:
+The public observer exposes public observations, publisher headlines and deterministic descriptors. Accounts, bots, administrator commands, models, orders and fills remain private/unavailable, not simulated in the public page. Public breadth is an additive read-only response field. No financial schema migration is needed.
 
-| Endpoint | Fields consumed |
-| --- | --- |
-| `/api/observer/state` | assets: symbol, name, kind, currency, price, change, source, asof, timestamp_basis, fresh; news: URL/title/source/publication time; research: symbol/RSI/mean/momentum/samples/asof/fresh; providers: name/state/message/checked; total/offset/limit/observed/notice |
-| `/api/observer/history?symbol=…` | Up to 96 saved `ts,price` pairs in ascending timestamp order |
+The private full-backend web source includes account/journal/risk/Admin/Day Trader presentation. Its tests use fresh disposable stores or intercepted synthetic HTTP records. No owner model or command session is contacted by browser verification. Private runtime activation remains separately authorized; this delivery never starts that service.
 
-Selection is browser-local and does not modify server state. Only the existing symbol watchlist persists in localStorage (maximum 100). Layout, chart windows and selection currently last for the page session. Source facts may be cached from a previously viewed results page; their observation timestamp remains visible. Indicators absent from the returned snapshot are described as unavailable, rather than asserting that no research exists.
+The native APK and signing identity are unchanged. Native token mapping, device lifecycle, assistive-technology handset acceptance and signed APK delivery belong to the remaining native/release work.
 
-The API exposes no account records, fills, gates, bots or administrator evidence; these are not fabricated in the public interface. No AI connection, CLI invocation, financial migration or private backend activation is introduced. The black New Era design and existing decorative scene remain the visual baseline.
+## Acceptance evidence
 
-## Delivery status against the full roadmap
+- [Public workspace browser report](verification/phase2-workspace-browser.json): layouts at 320/390/768/1440, 200% text, saved preferences/reset, command/deep-link journeys, focus preservation, request races, failure recovery, lifecycle suspension, reduced motion and accessibility-tree names. It includes a local cached-interaction p95 measurement and semantic token contrast ratios.
+- [Full terminal browser report](verification/phase2-terminal-browser.json): complete scanner reachability, accessible candles, stable selection/drafts/chart canvas, old routes, responsive widths, single mutation submission after repeated renders, uncertain Admin delivery and structured Day Trader results. Synthetic fixture only.
+- [Backend report](verification/phase2-backend.json): 111 isolated checks across 12 suites, including public isolation, full terminal, risk, HTTP, foundation, Admin and Day Trader boundaries.
+- [Live deployment report](verification/phase2-live.json): actual public site controls and read-only metadata, captured after deployment. Its timestamp/revision identifies the deployed artifact.
+- [Day Trader screenshot](images/phase2-day-trader-fixture.png) uses synthetic isolated browser records and is not market evidence.
 
-| Tasks | Status in this first delivery |
-| --- | --- |
-| P2-07 chart controls, P2-08 linked context | Public observer implementation delivered; broader terminal remains open |
-| P2-11 accessible chart values | Public observer price table and keyboard sample inspector delivered |
-| P2-12 stable updates, P2-13 polling, P2-14 cancellation | Public observer implementation and focused browser journeys delivered |
-| P2-18 structured evidence, P2-19 recovery | Public source evidence/retry slice delivered; private admin and mutation flows remain open |
-| P2-04 status, P2-15 paging | Existing observer status/paging retained; broader phase acceptance remains open |
-| P2-20 responsive/accessibility | Automated viewport, text scaling, reduced motion and keyboard checks; manual assistive-technology, contrast and device latency review remain open |
-| Other Phase 2 tasks | Pending: complete token/theme system, workspace navigation, saved resizable layouts, meaningful breadth, persisted event markers and full terminal-specific views |
+Automated AX-tree checks and semantic-token contrast checks are not a claim of manual screen-reader certification, full-page WCAG conformance, physical handset acceptance or a universal latency guarantee. The cached interaction measurement applies to its documented browser/runner only. Manual assistive-technology acceptance is still open and is explicitly tracked under P2-20.
 
-## Verification and rollback
+## Rollback
 
-Run `python3 test_observer.py` for the eight read-only isolation checks. With Playwright and Chromium installed, run `python tools/check_phase2_browser.py docs/verification/phase2-browser.json`. This uses a temporary SQLite fixture, starts no feed worker and makes no model calls. Fixture prices are never published as live-market evidence.
-
-Automated browser coverage is documented in [the report](verification/phase2-browser.json). These checks do not establish screen-reader conformance, complete WCAG contrast conformance or a measured p95 interaction budget. Complete Phase 2 acceptance requires those remaining reviews and broader task delivery.
-
-Rollback this slice by restoring the prior observer HTML/CSS/JS from commit `b72d967`. No store/schema migration or private-runtime restart is required. Deploy by pulling the reviewed source into the existing Codespace; public static assets are read on each request.
-
-## Live evidence
-
-[Workspace screenshot](images/phase2-workspace.png) · [Source and price-table screenshot](images/phase2-evidence.png) · [Live checks](verification/phase2-live.json). Captures show real public observations at the report timestamp.
+Use the Workspace layout toggle for the classic composition without changing data. For complete source rollback, restore the affected source files from pre-delivery commit `5f16ff3`, then restart only the public observer. The private installation has a private source-before archive. Never restore an old financial database as a UI rollback. The response extension is additive; old public clients continue to work.
