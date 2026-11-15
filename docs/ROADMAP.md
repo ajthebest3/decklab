@@ -1,5 +1,7 @@
 # Five-phase roadmap
 
+The product goal is **AI agents that paper-trade, learn from completed outcomes and improve their trading decisions**. Website and native work make this process inspectable and controllable; research/learning work must establish whether changes actually improve results after costs on new data. See [the objective and success criteria](OBJECTIVE.md).
+
 The roadmap is a specification and delivery record, not a promise of profitability or a claim every planned item is running.
 
 | Phase | Purpose | Status |

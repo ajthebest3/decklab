@@ -1,12 +1,26 @@
-# DeckLab — a live market observatory
+# DeckLab — an AI paper-trading and learning lab
 
-**Markets. Headlines. Evidence. A clearer perspective.**
+**AI agents trade in simulation, learn from completed outcomes, and work toward better trading decisions.**
 
-DeckLab is a visual market research workspace with a black New Era interface, an original interactive 3D particle halo, public market observations, a browser watchlist, publisher news and transparent statistical indicators.
+DeckLab’s main objective is to build and evaluate AI trading agents that improve their strategies through market research, realistic paper execution and measurable feedback. The goal is better results after fees with controlled risk, demonstrated on new market data. Improvement and profitability must be established by evidence.
 
-The public deployment is a **read-only live observer**. It automatically refreshes market/news observations while its GitHub Codespace is running. **AI is off. Order execution is off. No personal accounts or private ledgers are exposed.**
+The website and Android app are the owner’s window into that process: market context, bot decisions, simulated trades, costs, learning updates and risk controls. The public market observatory is the currently deployed part of this wider project.
+
+**Current public deployment:** read-only market observations, news, watchlists and deterministic indicators. **AI is off and order execution is off.** The private research/trading service remains paused. Opening the public site does not start bots or expose personal accounts.
 
 [**Open the live website**](https://decklab-live-5xw6xv99qvvc7g9j-8790.app.github.dev) · [Open in GitHub Codespaces](https://codespaces.new/ajthebest3/decklab) · [Feature guide](docs/FEATURES.md) · [Architecture](docs/ARCHITECTURE.md) · [Development](docs/DEVELOPMENT.md) · [CLI assistants](docs/CLI_ASSISTANTS.md) · [Roadmap](docs/ROADMAP.md)
+
+## The core objective: trade → learn → evaluate → improve
+
+1. **Observe:** gather dated market prices, available liquidity and relevant news.
+2. **Decide:** AI advisors propose strategies; bounded policies apply them subject to owner risk limits.
+3. **Paper-trade:** supported orders wait for later observed market evidence, with modeled delays, liquidity limits, partial fills and fees.
+4. **Learn:** an isolated evaluator scores fully closed episodes **+1 for net profit, −5 for net loss, 0 for break-even**. Learners receive points and permitted market/symbol context; monetary accounting stays in the owner’s evaluation view.
+5. **Evaluate and revise:** inspect recorded outcomes, adapt bounded strategy/policy settings and assess whether improvements hold on later data. Chronological, held-out evaluation and stronger candidate-promotion gates are part of the research/learning roadmap.
+
+Point-based policy updates and strategy revisions are implemented in the wider source. This does not mean the underlying LLM weights are trained, that autonomous providers are configured in this public distribution, or that any strategy has demonstrated reliable profitability. Losses, fees and failed experiments remain part of the record.
+
+[**Read the objective, learning loop and success criteria →**](docs/OBJECTIVE.md)
 
 ## Screenshots
 
@@ -34,11 +48,11 @@ Linked source evidence, recorded-sample chart controls and accessible prices. Sa
 
 <img src="docs/images/live-mobile.png" width="390" alt="DeckLab public observer at mobile viewport width">
 
-## Architecture at a glance
+## Public deployment architecture
 
 ![DeckLab public observation architecture](docs/images/architecture.svg)
 
-## What you can do
+## What you can do on the public website
 
 - **Explore markets:** search tracked crypto, equity, index, FX and commodity observations. Source availability varies by provider.
 - **Build a watchlist:** pin symbols in your browser, filter globally to your pinned instruments and revisit them later.
@@ -56,7 +70,8 @@ Linked source evidence, recorded-sample chart controls and accessible prices. Sa
 | Quotes, publisher headlines, observed history | Enabled, provider-dependent | Implemented |
 | Search and browser watchlist | Enabled | Server watchlists/notes also implemented |
 | RSI / sampled mean / momentum | Enabled after sufficient samples | Implemented |
-| AI or model requests | **Disabled** | Optional manual developer CLI usage |
+| AI strategy/advisor infrastructure | **Disabled** | Source included; requires separate private setup and activation. Public distribution has no configured autonomous model provider |
+| Point-feedback learning and strategy revisions | Not running | Policy-update and strategy-review infrastructure included; broader evaluation work remains on the roadmap |
 | Original / managed / archived paper accounts | Not exposed | Implemented in separate modules |
 | Simulation fills, fees, points and audit evidence | Not exposed | Implemented; not a real broker |
 | Admin / private transport / account controls | Not exposed | Private installation only |
@@ -92,6 +107,7 @@ This distribution uses **Codex, Claude and AGY CLIs** for optional manual develo
 
 ## More documentation
 
+- [Core objective, AI trading loop and success criteria](docs/OBJECTIVE.md)
 - [Detailed features and limitations](docs/FEATURES.md)
 - [Architecture and module map](docs/ARCHITECTURE.md)
 - [Data sources and timestamp semantics](docs/DATA_SOURCES.md)

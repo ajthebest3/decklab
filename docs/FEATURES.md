@@ -1,5 +1,7 @@
 # Features in detail
 
+DeckLab’s core goal is AI paper trading, outcome-based learning and measurable strategy improvement. [The objective and learning loop](OBJECTIVE.md) explain that wider project. Sections 1–7 describe the currently deployed public observer, where AI and execution remain disabled.
+
 ## 1. Market radar
 
 The public observer maintains a tracked instrument directory from two sources: a seed list of international instruments and the available Kraken spot USD pairs. It searches names and symbols, pages through results and shows price, native currency, source change and observation status.
@@ -56,4 +58,4 @@ The five-phase roadmap covers foundation, website, native Android, research/lear
 
 ## Phase 2 workspace improvements
 
-Select a market row or research symbol to inspect its chart and source evidence together. Line/area views and time windows use saved samples only. Open **Accessible price data** for the equivalent values, or use the sample slider with arrow keys. The evidence panel includes timestamps, freshness, source and Advanced public JSON. Background refresh preserves selection, chart controls, focus and open disclosures. [Delivery scope and remaining Phase 2 work](PHASE2.md).
+Select a market row or research symbol to inspect its chart and source evidence together. Line/area views and time windows use saved samples only. Open **Accessible price data** for the equivalent values, or use the sample slider with arrow keys. The evidence panel includes timestamps, freshness, source and Advanced public JSON. Background refresh preserves selection, chart controls, focus and open disclosures. [Phase 2 delivery and acceptance limits](PHASE2.md).

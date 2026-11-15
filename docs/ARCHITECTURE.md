@@ -1,5 +1,7 @@
 # Architecture
 
+DeckLab’s central objective is an AI paper-trading and learning loop: agents research markets, test strategies in simulation, receive completed-outcome feedback and work toward better after-cost decisions under risk controls. See [Objective and learning loop](OBJECTIVE.md) for the full workflow and success criteria. The public observation path below is one supporting subsystem; it never activates that loop.
+
 ## Public observation path
 
 ~~~mermaid
