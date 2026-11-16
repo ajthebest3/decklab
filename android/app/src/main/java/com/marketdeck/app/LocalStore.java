@@ -8,14 +8,22 @@ import java.util.*;
 
 /** Private on-device read model. Financial orders are never queued offline. */
 final class LocalStore extends SQLiteOpenHelper {
-    LocalStore(Context c){super(c,"decklab-device.db",null,1);setWriteAheadLoggingEnabled(true);}
+    LocalStore(Context c){super(c,"decklab-device.db",null,2);setWriteAheadLoggingEnabled(true);}
     @Override public void onCreate(SQLiteDatabase db){
         db.execSQL("CREATE TABLE snapshots(origin TEXT,path TEXT,body TEXT,received INTEGER,PRIMARY KEY(origin,path))");
         db.execSQL("CREATE TABLE instruments(origin TEXT,symbol TEXT,name TEXT,kind TEXT,region TEXT,currency TEXT,body TEXT,PRIMARY KEY(origin,symbol))");
         db.execSQL("CREATE TABLE device_items(origin TEXT,symbol TEXT,pinned INTEGER DEFAULT 0,note TEXT DEFAULT '',modified INTEGER,PRIMARY KEY(origin,symbol))");
         db.execSQL("CREATE TABLE drafts(origin TEXT,name TEXT,body TEXT,PRIMARY KEY(origin,name))");
+        metadata(db);
     }
-    @Override public void onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion){throw new IllegalStateException("A non-destructive migration is required");}
+    private static final long CACHE_AGE=14L*24*60*60*1000, CACHE_BYTES=8L*1024*1024;
+    private void metadata(SQLiteDatabase db){
+        db.execSQL("CREATE TABLE IF NOT EXISTS event_receipts(origin TEXT,event_id INTEGER,route TEXT,state TEXT,payload TEXT DEFAULT '',PRIMARY KEY(origin,event_id))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS event_cursors(origin TEXT PRIMARY KEY,event_id INTEGER)");
+    }
+    @Override public void onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion){
+        if(oldVersion<2)metadata(db); // SQLiteOpenHelper wraps version upgrade in one transaction.
+    }
     synchronized void save(String origin,String path,String body){
         SQLiteDatabase db=getWritableDatabase();db.beginTransaction();
         try{
@@ -38,6 +46,7 @@ final class LocalStore extends SQLiteOpenHelper {
             }
             // Bound chart/detail cache while retaining durable device notes and watchlist.
             db.execSQL("DELETE FROM snapshots WHERE origin=? AND path NOT IN (SELECT path FROM snapshots WHERE origin=? ORDER BY received DESC LIMIT 80)",new Object[]{origin,origin});
+            evict(db,origin,System.currentTimeMillis());
             db.setTransactionSuccessful();
         }catch(JSONException e){throw new IllegalArgumentException("Invalid server JSON",e);}finally{db.endTransaction();}
     }
@@ -72,4 +81,39 @@ final class LocalStore extends SQLiteOpenHelper {
     synchronized void draft(String origin,String name,String body){ContentValues v=new ContentValues();v.put("origin",origin);v.put("name",name);v.put("body",body);getWritableDatabase().insertWithOnConflict("drafts",null,v,SQLiteDatabase.CONFLICT_REPLACE);}
     synchronized int count(String origin){try(Cursor c=getReadableDatabase().rawQuery("SELECT COUNT(*) FROM instruments WHERE origin=?",new String[]{origin})){return c.moveToFirst()?c.getInt(0):0;}}
     synchronized void clearCache(String origin){SQLiteDatabase db=getWritableDatabase();db.beginTransaction();try{db.delete("snapshots","origin=?",new String[]{origin});db.execSQL("DELETE FROM instruments WHERE origin=? AND symbol NOT IN (SELECT symbol FROM device_items WHERE origin=? AND (pinned=1 OR note<>''))",new Object[]{origin,origin});db.setTransactionSuccessful();}finally{db.endTransaction();}}
+    synchronized void evict(SQLiteDatabase db,String origin,long now){
+        db.delete("snapshots","origin=? AND received<?",new String[]{origin,Long.toString(now-CACHE_AGE)});
+        while(bytes(db,"snapshots",origin)>CACHE_BYTES)db.execSQL("DELETE FROM snapshots WHERE rowid=(SELECT rowid FROM snapshots WHERE origin=? ORDER BY received,rowid LIMIT 1)",new Object[]{origin});
+        // Price-directory rows are disposable except those referenced by a user's saved item.
+        while(bytes(db,"instruments",origin)>CACHE_BYTES){
+            int n=db.delete("instruments","rowid IN (SELECT a.rowid FROM instruments a WHERE a.origin=? AND NOT EXISTS (SELECT 1 FROM device_items i WHERE i.origin=a.origin AND i.symbol=a.symbol AND (i.pinned=1 OR i.note<>'')) ORDER BY a.rowid LIMIT 100)",new String[]{origin});
+            if(n==0)break;
+        }
+    }
+    private long bytes(SQLiteDatabase db,String table,String origin){try(Cursor c=db.rawQuery("SELECT COALESCE(SUM(length(CAST(body AS BLOB))),0) FROM "+table+" WHERE origin=?",new String[]{origin})){c.moveToFirst();return c.getLong(0);}}
+    synchronized void eraseUserRecords(String origin){SQLiteDatabase db=getWritableDatabase();db.beginTransaction();try{db.delete("device_items","origin=?",new String[]{origin});db.delete("drafts","origin=?",new String[]{origin});db.setTransactionSuccessful();}finally{db.endTransaction();}}
+    synchronized long cacheBytes(String origin){return bytes(getReadableDatabase(),"snapshots",origin)+bytes(getReadableDatabase(),"instruments",origin);}
+    synchronized long cursor(String origin){try(Cursor c=getReadableDatabase().rawQuery("SELECT event_id FROM event_cursors WHERE origin=?",new String[]{origin})){return c.moveToFirst()?c.getLong(0):-1;}}
+    synchronized void cursor(String origin,long id){if(id<0)return;SQLiteDatabase db=getWritableDatabase();db.beginTransaction();try{db.execSQL("INSERT OR IGNORE INTO event_cursors(origin,event_id) VALUES(?,?)",new Object[]{origin,id});db.execSQL("UPDATE event_cursors SET event_id=MAX(event_id,?) WHERE origin=?",new Object[]{id,origin});db.setTransactionSuccessful();}finally{db.endTransaction();}}
+    synchronized boolean claimEvent(String origin,long id,String route){return claimEvent(origin,id,route,"");}
+    synchronized boolean claimEvent(String origin,long id,String route,String payload){
+        if(id<0)return false;
+        ContentValues v=new ContentValues();v.put("origin",origin);v.put("event_id",id);v.put("route",route);v.put("state","delivery uncertain");v.put("payload",payload);
+        return getWritableDatabase().insertWithOnConflict("event_receipts",null,v,SQLiteDatabase.CONFLICT_IGNORE)!=-1;
+    }
+    synchronized JSONArray recentEvents(String origin){JSONArray out=new JSONArray();try(Cursor c=getReadableDatabase().rawQuery("SELECT event_id,state,route FROM event_receipts WHERE origin=? ORDER BY event_id DESC LIMIT 50",new String[]{origin})){while(c.moveToNext())try{out.put(new JSONObject().put("id",c.getLong(0)).put("state",c.getString(1)).put("route",c.getString(2)));}catch(JSONException impossible){throw new IllegalStateException(impossible);}}return out;}
+    synchronized String eventDetails(String origin,long id){try(Cursor c=getReadableDatabase().rawQuery("SELECT payload,state FROM event_receipts WHERE origin=? AND event_id=?",new String[]{origin,Long.toString(id)})){return c.moveToFirst()?"Event #"+id+" · "+c.getString(1)+"\n"+c.getString(0):"Saved event detail unavailable";}}
+    synchronized void eventState(String origin,long id,String state){
+        if(!Arrays.asList("delivered","read").contains(state))throw new IllegalArgumentException("Invalid receipt state");
+        getWritableDatabase().execSQL("UPDATE event_receipts SET state=? WHERE origin=? AND event_id=? AND state<>'read'",new Object[]{state,origin,id});
+    }
+    synchronized JSONObject exportUserData(String origin){return exportRows(getReadableDatabase(),origin);}
+    static JSONObject recoverUserData(Context context,String origin){try(SQLiteDatabase db=SQLiteDatabase.openDatabase(context.getDatabasePath("decklab-device.db").getAbsolutePath(),null,SQLiteDatabase.OPEN_READONLY)){return exportRows(db,origin);}}
+    private static JSONObject exportRows(SQLiteDatabase database,String origin){
+        JSONObject out=new JSONObject();JSONArray items=new JSONArray(),drafts=new JSONArray();
+        try(Cursor c=database.rawQuery("SELECT symbol,pinned,note,modified FROM device_items WHERE origin=? ORDER BY symbol",new String[]{origin})){while(c.moveToNext())items.put(new JSONObject().put("symbol",c.getString(0)).put("pinned",c.getInt(1)==1).put("note",c.getString(2)).put("modified",c.getLong(3)));}catch(JSONException e){throw new IllegalStateException(e);}
+        try(Cursor c=database.rawQuery("SELECT name,body FROM drafts WHERE origin=? ORDER BY name",new String[]{origin})){while(c.moveToNext())drafts.put(new JSONObject().put("name",c.getString(0)).put("body",c.getString(1)));}catch(JSONException e){throw new IllegalStateException(e);}
+        try{return out.put("origin",origin).put("sync_state","Local-only; no automatic upload").put("items",items).put("drafts",drafts);}catch(JSONException e){throw new IllegalStateException(e);}
+    }
+
 }

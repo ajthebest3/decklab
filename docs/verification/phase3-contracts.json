@@ -1,0 +1,182 @@
+[
+  {
+    "id": "P3-01",
+    "depends_on": "P1-20",
+    "files": "ScreenState.java; MainActivity.java",
+    "exact_contract": "Allowlisted presentation Bundle and origin guard; no session/passkey fields",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-02",
+    "depends_on": "P1-20;P2-01",
+    "files": "NativeTheme.java; res/values/colors.xml; res/values/styles.xml; MainActivity.java",
+    "exact_contract": "New Era native palette; comfortable_density and independent native_haptics preferences; system fontScale unchanged",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-03",
+    "depends_on": "P1-20;P2-01",
+    "files": "TerminalDashboard.java; MainActivity.java",
+    "exact_contract": "At least12sp metadata;48dp native actions; narrow large-font nav; source/error text",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-04",
+    "depends_on": "P1-20;P2-01",
+    "files": "TerminalDashboard.java",
+    "exact_contract": "Stack panels below600dp or fontScale>1.3; stats below360dp; no fixed text-row height",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-05",
+    "depends_on": "P1-20;P2-01",
+    "files": "TerminalDashboard.java Pipeline",
+    "exact_contract": "Six stable focusable Android controls, name/value/state/detail and native dialog",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-06",
+    "depends_on": "P1-20",
+    "files": "NativeChart.java; MainActivity.java; TerminalDashboard.java",
+    "exact_contract": "Exact origin/instrument/series/interval identity; reset or matching-key restored zoom/offset/hover",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-07",
+    "depends_on": "P1-20;P2-01",
+    "files": "NativeChart.java; ChartInspector.java",
+    "exact_contract": "Explicit inspection; parent vertical-scroll release; pan/pinch/D-pad; reset;100-observation pages cover full series",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-08",
+    "depends_on": "P1-20",
+    "files": "ScreenState.java; MainActivity.java; TerminalDashboard.java",
+    "exact_contract": "Origin-bound route/filter/directory/journal/back/scroll/chart/expanded state; notes/research drafts durable; no admin-token resurrection",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-09",
+    "depends_on": "P1-20",
+    "files": "SpecialistController.java; MainActivity.java",
+    "exact_contract": "Native allowlisted provider/model/effort/bot-state summary; edits retain explicitly labelled Advanced workspace",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-10",
+    "depends_on": "P1-20",
+    "files": "SpecialistController.java; MainActivity.java",
+    "exact_contract": "Existing GET day-trader job index/detail, native stage state/error and US-only planning boundaries; new runs retain Advanced workspace",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-11",
+    "depends_on": "P1-20",
+    "files": "ResourceHealth.java; DeviceRepository.java",
+    "exact_contract": "Per-origin/path lastAttemptMs,lastSuccessMs,error,nextRetryMs,failures,requesting; receipt/source times remain distinct",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-12",
+    "depends_on": "P1-20",
+    "files": "DeviceRepository.java",
+    "exact_contract": "2 concurrent+16 queued reads; separate1+4 actions; visible rejection; read coalescing; no action retry",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-13",
+    "depends_on": "P1-20",
+    "files": "Connection.java; DeviceRepository.java; MainActivity.java",
+    "exact_contract": "Read2\u201360s backoff; manual-refresh bypass; origin generations; obsolete reads cancel/disconnect; no old-origin save/repaint",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-14",
+    "depends_on": "P1-20",
+    "files": "MainActivity.java",
+    "exact_contract": "Redacted private diagnostics with selected/expected origin, API version, last-known pause, each resource attempt/success/retry and Termius next step",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-15",
+    "depends_on": "P1-20",
+    "files": "MainActivity.java Rows; TerminalDashboard.java",
+    "exact_contract": "Recycled native row holders and stable stage/market/stat views;100 bindings use1 row; no claimed phone FPS",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-16",
+    "depends_on": "P1-20",
+    "files": "LocalStore.java; MainActivity.java",
+    "exact_contract": "Transactional device1\u21922 additive receipts/cursors; no drops; unsupported downgrade recovery/export; no production/server migration",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-17",
+    "depends_on": "P1-20",
+    "files": "LocalStore.java; MainActivity.java",
+    "exact_contract": "Per-origin snapshots80/8MiB/14days on writes;8MiB unreferenced instrument cache; usage visible; notes/saves/drafts and receipts exempt",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-18",
+    "depends_on": "P1-20",
+    "files": "LocalStore.java; NotificationService.java; MainActivity.java",
+    "exact_contract": "Monotonic per-origin cursor; committed ID receipt; delivery uncertain/delivered/read; exact local event details; cross-origin review without navigation",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-19",
+    "depends_on": "P1-20",
+    "files": "LocalStore.java; MainActivity.java",
+    "exact_contract": "Origin-bound user-selected JSON export; explicit local-only semantics; separately confirmed erase excludes safety/receipts/server records",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  },
+  {
+    "id": "P3-20",
+    "depends_on": "P1-20;P3-01;P3-02;P3-03;P3-04;P3-05;P3-06;P3-07;P3-08;P3-09;P3-10;P3-11;P3-12;P3-13;P3-14;P3-15;P3-16;P3-17;P3-18;P3-19",
+    "files": "Phase3Test.java; NativeAppTest.java; res/; build.gradle",
+    "exact_contract": "Automated JVM/Robolectric plus compile/lint; native fixture screenshots; original signing identity candidate; physical handset/emulator/perf gates pending",
+    "migration": "No server/financial change. Device schema1\u21922 only for16/18; additive receipts/cursors.",
+    "rollback": "Source-only rollback; device schema2 requires compatible app-forward fix; never restore financial DBs.",
+    "gate": "Candidate only; physical acceptance and Phase5 release pending; pause unchanged."
+  }
+]

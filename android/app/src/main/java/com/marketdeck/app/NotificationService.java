@@ -23,15 +23,17 @@ public class NotificationService extends Service {
         alerts.setDescription("Events pushed from your Market Deck server");alerts.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
         m.createNotificationChannel(monitor);m.createNotificationChannel(alerts);
     }
-    static PendingIntent open(Context c,String route,int id){
-        return PendingIntent.getActivity(c,id,new Intent(c,MainActivity.class).putExtra("route",route).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP),PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
+    static PendingIntent open(Context c,String route,int id){return open(c,route,id,Connection.endpoint(c),-1);}
+    static PendingIntent open(Context c,String route,int id,String origin,long eventId){
+        return PendingIntent.getActivity(c,id,new Intent(c,MainActivity.class).setData(android.net.Uri.parse("decklab://event/"+android.net.Uri.encode(origin)+"/"+eventId)).putExtra("event_origin",origin).putExtra("event_id",eventId).putExtra("route",route).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP),PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
     }
-    static void post(Context c,int id,String title,String body,String route){
+    static void post(Context c,int id,String title,String body,String route){postAt(c,id,title,body,route,Connection.endpoint(c),-1);}
+    static void postAt(Context c,int id,String title,String body,String route,String origin,long eventId){
         if(!c.getSystemService(NotificationManager.class).areNotificationsEnabled())return;
         Notification publicVersion=new Notification.Builder(c,ALERTS).setSmallIcon(R.drawable.ic_notification).setContentTitle("Market Deck").setContentText("You have a market update").build();
         Notification n=new Notification.Builder(c,ALERTS).setSmallIcon(R.drawable.ic_notification).setColor(0xffd5f584).setContentTitle(title).setContentText(body)
-            .setStyle(new Notification.BigTextStyle().bigText(body)).setVisibility(Notification.VISIBILITY_PRIVATE).setPublicVersion(publicVersion).setAutoCancel(true).setOnlyAlertOnce(true).setContentIntent(open(c,route,id)).build();
-        c.getSystemService(NotificationManager.class).notify("market-event",id,n);
+            .setStyle(new Notification.BigTextStyle().bigText(body)).setVisibility(Notification.VISIBILITY_PRIVATE).setPublicVersion(publicVersion).setAutoCancel(true).setOnlyAlertOnce(true).setContentIntent(open(c,route,id,origin,eventId)).build();
+        c.getSystemService(NotificationManager.class).notify("market-event:"+origin,id,n);
     }
     static void test(Context c){channels(c);post(c,2,"Market Deck · test notification","Notifications are allowed on this phone. Server delivery also needs an active connection.","alerts");}
     private Notification monitor(String message){
@@ -49,26 +51,35 @@ public class NotificationService extends Service {
         return START_STICKY;
     }
     private void loop(){
-        int delay=2;
+        int delay=2;LocalStore events=new LocalStore(this);
         while(running){
             HttpURLConnection con=null;
             try{
                 if(!getSystemService(NotificationManager.class).areNotificationsEnabled()){Connection.prefs(this).edit().putBoolean("notifications",false).apply();stopSelf();return;}
-                con=Connection.open(this,"/api/mobile/stream");active=con;
+                final String endpoint=Connection.endpoint(this);con=Connection.openAt(endpoint,"/api/mobile/stream");active=con;
                 con.setReadTimeout(45000);con.setRequestProperty("Accept","text/event-stream");
-                long cursor=Connection.prefs(this).getLong("cursor",-1);
+                long cursor=events.cursor(endpoint);
                 if(cursor>=0)con.setRequestProperty("Last-Event-ID",Long.toString(cursor));
                 if(con.getResponseCode()!=200 || !String.valueOf(con.getContentType()).startsWith("text/event-stream"))throw new IOException("Stream unavailable");
                 update("Connected · listening for market updates");delay=2;
                 try(BufferedReader reader=new BufferedReader(new InputStreamReader(con.getInputStream(),StandardCharsets.UTF_8))){
                     String line,type="",data="",id="";
-                    while(running&&(line=reader.readLine())!=null){
+                    while(running&&endpoint.equals(Connection.endpoint(this))&&(line=reader.readLine())!=null){
                         if(line.length()>16384)throw new IOException("Event too large");
                         if(line.isEmpty()){
                             if(!data.isEmpty()){
                                 JSONObject item=new JSONObject(data);
-                                if("notification".equals(type))post(this,(int)(item.getLong("id")%2000000000L)+10,item.getString("title"),item.getString("body"),item.getString("route"));
-                                if(!id.isEmpty())Connection.prefs(this).edit().putLong("cursor",Long.parseLong(id)).commit();
+                                if(!running||!endpoint.equals(Connection.endpoint(this)))break;
+                                long eventId=id.isEmpty()?-1:Long.parseLong(id);
+                                if("notification".equals(type)){
+                                    if(eventId<0||eventId!=item.getLong("id"))throw new IOException("Invalid committed event identity");
+                                    if(!getSystemService(NotificationManager.class).areNotificationsEnabled())throw new IOException("Notification permission denied");
+                                    if(events.claimEvent(endpoint,eventId,item.getString("route"),item.toString())){
+                                        postAt(this,(int)(eventId%2000000000L)+10,item.getString("title"),item.getString("body"),item.getString("route"),endpoint,eventId);
+                                        events.eventState(endpoint,eventId,"delivered");
+                                    }
+                                }
+                                if(eventId>=0)events.cursor(endpoint,eventId);
                             }
                             type=data=id="";
                         }else if(line.startsWith("event: "))type=line.substring(7);
@@ -80,6 +91,7 @@ public class NotificationService extends Service {
             finally{if(con!=null)con.disconnect();active=null;}
             if(running)try{Thread.sleep(delay*1000L+(long)(Math.random()*700));delay=Math.min(60,delay*2);}catch(InterruptedException e){Thread.currentThread().interrupt();break;}
         }
+        events.close();
     }
     @Override public void onDestroy(){running=false;status="off";if(active!=null)active.disconnect();if(worker!=null)worker.interrupt();stopForeground(STOP_FOREGROUND_REMOVE);super.onDestroy();}
     @Override public IBinder onBind(Intent i){return null;}

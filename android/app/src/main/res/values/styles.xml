@@ -14,8 +14,8 @@
         <item name="android:statusBarColor">#F4F5F0</item><item name="android:navigationBarColor">#FFFFFF</item>
     </style>
     <style name="NativeDark" parent="android:style/Theme.Material.NoActionBar">
-        <item name="android:fontFamily">sans</item><item name="android:colorAccent">#76D8C7</item>
-        <item name="android:windowBackground">#070D1B</item><item name="android:windowLightStatusBar">false</item>
-        <item name="android:statusBarColor">#070D1B</item><item name="android:navigationBarColor">#0B1425</item>
+        <item name="android:fontFamily">sans</item><item name="android:colorAccent">@color/native_accent</item>
+        <item name="android:windowBackground">@color/native_background</item><item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@color/native_background</item><item name="android:navigationBarColor">@color/native_panel</item>
     </style>
 </resources>

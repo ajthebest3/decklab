@@ -1,3 +1,7 @@
+# Phase 3 source — 2.3.0 candidate
+
+The native source now includes ScreenState, NativeTheme, SpecialistController and ChartInspector. Device schema2 is additive; notifications are scoped by origin and event ID. Existing backend controls and the Advanced workspace remain. Native source/build verification is complete; physical handset/release acceptance remains pending. See docs/PHASE3.md in the public distribution and plans/20261116-phase3 in the private workspace. Historical release notes follow.
+
 # DeckLab 2.1 native Android
 
 The launcher is a Java Android Activity. Home, markets, instrument details, Canvas charts, bots, journal, Mirai research, device settings, portfolio controls, alerts, news, company discovery, original-account views and the admin command screen use Android Views. They do not load HTML or JavaScript. The previous WebView workspace is a separate, non-exported LegacyActivity, available explicitly from More for specialist tools such as the full model-roster editor.

@@ -6,8 +6,8 @@ android {
         applicationId 'com.marketdeck.app'
         minSdk 26
         targetSdk 36
-        versionCode 20
-        versionName '2.2.0'
+        versionCode 21
+        versionName '2.3.0'
     }
     testOptions { unitTests.includeAndroidResources = true; unitTests.all { maxHeapSize = "768m"; systemProperty "robolectric.dependency.repo.url", "https://repo.maven.apache.org/maven2"; jvmArgs "--add-opens=java.base/java.lang=ALL-UNNAMED", "--add-opens=java.base/java.util=ALL-UNNAMED", "--add-opens=java.base/java.io=ALL-UNNAMED", "--add-opens=java.base/java.net=ALL-UNNAMED", "--add-opens=java.base/java.security=ALL-UNNAMED", "--add-opens=java.base/java.text=ALL-UNNAMED", "--add-opens=java.base/jdk.internal.access=ALL-UNNAMED" } }
     compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }

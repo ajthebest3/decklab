@@ -1,0 +1,27 @@
+{
+  "suites": [
+    {
+      "name": "com.marketdeck.app.NativeAppTest",
+      "tests": "28",
+      "failures": "0",
+      "errors": "0",
+      "time": "31.67"
+    },
+    {
+      "name": "com.marketdeck.app.ResourceHealthTest",
+      "tests": "4",
+      "failures": "0",
+      "errors": "0",
+      "time": "0.002"
+    },
+    {
+      "name": "com.marketdeck.app.Phase3Test",
+      "tests": "42",
+      "failures": "0",
+      "errors": "0",
+      "time": "14.542"
+    }
+  ],
+  "total": 74,
+  "kind": "JVM/Robolectric framework checks; not physical handset acceptance"
+}

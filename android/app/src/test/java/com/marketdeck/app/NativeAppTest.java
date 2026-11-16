@@ -71,7 +71,7 @@ public class NativeAppTest {
     @Test public void zoomedChartCanPanIntoEarlierHistory()throws Exception{
         NativeChart chart=new NativeChart(context);android.widget.FrameLayout parent=new android.widget.FrameLayout(context);parent.addView(chart);parent.layout(0,0,800,500);chart.layout(0,0,800,500);
         JSONArray rows=new JSONArray();for(int i=0;i<100;i++)rows.put(json("ts",1700000000+i,"usd",100+i));chart.data(rows,false,"USD");Field zoom=NativeChart.class.getDeclaredField("zoom"),offset=NativeChart.class.getDeclaredField("offset");zoom.setAccessible(true);offset.setAccessible(true);zoom.setFloat(chart,4);
-        android.view.MotionEvent down=android.view.MotionEvent.obtain(0,0,android.view.MotionEvent.ACTION_DOWN,100,200,0),move=android.view.MotionEvent.obtain(0,20,android.view.MotionEvent.ACTION_MOVE,500,200,0);chart.onTouchEvent(down);chart.onTouchEvent(move);assertTrue(offset.getInt(chart)>0);down.recycle();move.recycle();
+        chart.setInspection(true);android.view.MotionEvent down=android.view.MotionEvent.obtain(0,0,android.view.MotionEvent.ACTION_DOWN,100,200,0),move=android.view.MotionEvent.obtain(0,20,android.view.MotionEvent.ACTION_MOVE,500,200,0);chart.onTouchEvent(down);chart.onTouchEvent(move);assertTrue(offset.getInt(chart)>0);down.recycle();move.recycle();
         chart.fit();assertEquals(0,offset.getInt(chart));assertEquals(1,zoom.getFloat(chart),0);
     }
 

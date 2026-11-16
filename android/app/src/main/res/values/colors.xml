@@ -1,0 +1,8 @@
+<resources>
+    <color name="native_background">#08080B</color>
+    <color name="native_panel">#121218</color>
+    <color name="native_ink">#F4F1F8</color>
+    <color name="native_muted">#B1ADBF</color>
+    <color name="native_accent">#EFD0BB</color>
+    <color name="native_edge">#34343F</color>
+</resources>

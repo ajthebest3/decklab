@@ -12,6 +12,7 @@ final class ResourceHealth {
         final long lastAttemptMs;
         final long lastSuccessMs;
         final String error;
+        long nextRetryMs; int failures; boolean requesting;
 
         Snapshot(long lastAttemptMs, long lastSuccessMs, String error) {
             this.lastAttemptMs = lastAttemptMs;
@@ -32,7 +33,7 @@ final class ResourceHealth {
 
     synchronized void attempted(String origin, String path, long now) {
         Snapshot prior = get(origin, path);
-        record(origin, path, new Snapshot(now, prior.lastSuccessMs, prior.error));
+        Snapshot next=new Snapshot(now, prior.lastSuccessMs, prior.error); next.failures=prior.failures; next.nextRetryMs=prior.nextRetryMs; next.requesting=true; record(origin,path,next);
     }
 
     /** Clears only this exact origin+path failure; other keys are untouched. */
@@ -42,8 +43,10 @@ final class ResourceHealth {
 
     synchronized void failed(String origin, String path, long now, String error) {
         Snapshot prior = get(origin, path);
-        record(origin, path, new Snapshot(now, prior.lastSuccessMs, bound(error)));
+        Snapshot next=new Snapshot(now, prior.lastSuccessMs, bound(error)); next.failures=Math.min(10,prior.failures+1); next.nextRetryMs=now+Math.min(60000L,2000L*(1L<<Math.min(5,next.failures-1))); record(origin,path,next);
     }
+
+    synchronized void cancelled(String origin,String path){Snapshot prior=get(origin,path);prior.requesting=false;}
 
     /** Unknown (zero, no error) when never seen or evicted. */
     synchronized Snapshot get(String origin, String path) {

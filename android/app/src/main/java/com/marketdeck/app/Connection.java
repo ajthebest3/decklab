@@ -35,11 +35,18 @@ final class Connection {
         return con;
     }
     static String request(Context c, String method, String path, String body) throws Exception { return requestAt(endpoint(c),method,path,body); }
-    static String requestAt(String endpoint,String method,String path,String body) throws Exception {
+    static final class RequestHandle {
+        volatile HttpURLConnection connection;volatile boolean cancelled;volatile java.util.concurrent.FutureTask<Void> task;
+        synchronized void attach(HttpURLConnection value)throws IOException{if(cancelled){value.disconnect();throw new IOException("Read cancelled");}connection=value;}
+        synchronized void cancel(){cancelled=true;if(connection!=null)connection.disconnect();if(task!=null)task.cancel(true);}
+    }
+    static String requestAt(String endpoint,String method,String path,String body) throws Exception {return requestAt(endpoint,method,path,body,null);}
+    static String requestAt(String endpoint,String method,String path,String body,RequestHandle handle) throws Exception {
         if (!path.startsWith("/api/") || path.contains("#") || path.contains("\\") || path.contains("..") || path.contains("\r") || path.contains("\n")) throw new IOException("Unsupported API path");
         String route = path.split("\\?",2)[0];
         if (!(method.equals("GET") && GET.contains(route)) && !(method.equals("POST") && POST.contains(route))) throw new IOException("Unsupported API request");
         HttpURLConnection con = openAt(endpoint,path);
+        if(handle!=null)handle.attach(con);
         try {
             con.setRequestMethod(method);
             if (method.equals("POST")) {

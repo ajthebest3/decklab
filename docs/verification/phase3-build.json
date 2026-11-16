@@ -1,0 +1,47 @@
+{
+  "native_unit_tests": 74,
+  "unit_failures": 0,
+  "private_release_build": "passed",
+  "private_release_lint": "passed",
+  "public_debug_build": "passed",
+  "public_debug_lint": "passed",
+  "device_schema": {
+    "from": 1,
+    "to": 2,
+    "additive": true
+  },
+  "source_files": {
+    "android/app/src/main/java/com/marketdeck/app/ScreenState.java": "45718f3810187182db7113248445cc72fb9b41857aefaf50e919a7646914f5e8",
+    "android/app/src/main/java/com/marketdeck/app/LocalStore.java": "e88fa05a43033d4b92606cbfc46d15f782bff9260cbb1d2bd2e7a3b7da17130d",
+    "android/app/src/main/java/com/marketdeck/app/NativeTheme.java": "3fc33b834c6dc6b88e564ddac8c39eaa7c0b769277f9da4fe8908ccd0b9413e3",
+    "android/app/src/main/java/com/marketdeck/app/MainActivity.java": "c45c8153bee68ee503f202af807b2e0ecf7816806f00ced85c990b3fb646429b",
+    "android/app/src/main/java/com/marketdeck/app/ChartInspector.java": "fe13a370e4293a780ee6919dc596ba170965b4c3aea396290260c6e75d919851",
+    "android/app/src/main/java/com/marketdeck/app/DeviceRepository.java": "81f4c1c4db39ef354759c819fb414ba49e71194a2b1840fe24860b1fcafde473",
+    "android/app/src/main/java/com/marketdeck/app/ResourceHealth.java": "726893d2170f6042241c9e7305f2d09ac7f15f9dbbb89885aaaac3c13584eef2",
+    "android/app/src/main/java/com/marketdeck/app/NativeChart.java": "54eaafbf4c975b6b35ce3a52efbc1a444372a07ea868bbda74cb7d77061f15c5",
+    "android/app/src/main/java/com/marketdeck/app/Connection.java": "6052d54ecac64bed2df27374e193081721929f85eee28bd28ffe4a3359cab370",
+    "android/app/src/main/java/com/marketdeck/app/SpecialistController.java": "411a22143d5f51234c34fda28e58c9f9997c9c2d84781072c2dbb90fe8c23b58",
+    "android/app/src/main/java/com/marketdeck/app/LegacyActivity.java": "43a05c6b366a41c182ffeb69cc3385f9a515b7bb1ca43d7202953d33826ab2f9",
+    "android/app/src/main/java/com/marketdeck/app/TerminalDashboard.java": "26440469121772088b687fb04e2601c298b8f2eaef5f6248ac3927d861177202",
+    "android/app/src/main/java/com/marketdeck/app/NotificationService.java": "d22f7e7bfdbc62545f93cd824f3b07fea34f7b7e11f01a041b3ecc990e2bbbee"
+  },
+  "physical_acceptance": "pending",
+  "operational_activation": false,
+  "public_observer_restart": false,
+  "signed_public_release": false,
+  "source_sha256": {
+    "android/app/src/main/java/com/marketdeck/app/ScreenState.java": "45718f3810187182db7113248445cc72fb9b41857aefaf50e919a7646914f5e8",
+    "android/app/src/main/java/com/marketdeck/app/LocalStore.java": "e88fa05a43033d4b92606cbfc46d15f782bff9260cbb1d2bd2e7a3b7da17130d",
+    "android/app/src/main/java/com/marketdeck/app/NativeTheme.java": "3fc33b834c6dc6b88e564ddac8c39eaa7c0b769277f9da4fe8908ccd0b9413e3",
+    "android/app/src/main/java/com/marketdeck/app/MainActivity.java": "c45c8153bee68ee503f202af807b2e0ecf7816806f00ced85c990b3fb646429b",
+    "android/app/src/main/java/com/marketdeck/app/ChartInspector.java": "fe13a370e4293a780ee6919dc596ba170965b4c3aea396290260c6e75d919851",
+    "android/app/src/main/java/com/marketdeck/app/DeviceRepository.java": "add65655f37a6fc4b56944e49c7531bde9e13c894c238573b51fafa3c2550772",
+    "android/app/src/main/java/com/marketdeck/app/ResourceHealth.java": "726893d2170f6042241c9e7305f2d09ac7f15f9dbbb89885aaaac3c13584eef2",
+    "android/app/src/main/java/com/marketdeck/app/NativeChart.java": "54eaafbf4c975b6b35ce3a52efbc1a444372a07ea868bbda74cb7d77061f15c5",
+    "android/app/src/main/java/com/marketdeck/app/Connection.java": "6052d54ecac64bed2df27374e193081721929f85eee28bd28ffe4a3359cab370",
+    "android/app/src/main/java/com/marketdeck/app/SpecialistController.java": "411a22143d5f51234c34fda28e58c9f9997c9c2d84781072c2dbb90fe8c23b58",
+    "android/app/src/main/java/com/marketdeck/app/LegacyActivity.java": "43a05c6b366a41c182ffeb69cc3385f9a515b7bb1ca43d7202953d33826ab2f9",
+    "android/app/src/main/java/com/marketdeck/app/TerminalDashboard.java": "7fad81a9530c8745741b6236d9b43dc85ad7f3c626c1e3b7399ccef6352fd3d1",
+    "android/app/src/main/java/com/marketdeck/app/NotificationService.java": "d22f7e7bfdbc62545f93cd824f3b07fea34f7b7e11f01a041b3ecc990e2bbbee"
+  }
+}

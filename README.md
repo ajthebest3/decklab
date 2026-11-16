@@ -22,6 +22,10 @@ Point-based policy updates and strategy revisions are implemented in the wider s
 
 [**Read the objective, learning loop and success criteria →**](docs/OBJECTIVE.md)
 
+## Native Android progress
+
+Phase 3 source is implemented: native accessibility/layouts, offline records, chart identity, connection recovery and notification deduplication. The 2.3.0/code21 candidate passed74 automated checks; physical handset acceptance and final release remain pending. [Scope and validation](docs/PHASE3.md).
+
 ## Screenshots
 
 Actual captures of the public deployment. Market values and publisher headlines are snapshots, not current recommendations. Mobile images use a browser viewport, not a physical handset.
